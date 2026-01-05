@@ -1,9 +1,12 @@
 import { Routes } from '@angular/router';
 import { HomeLayoutComponent } from './Components/Home/home-layout/home-layout.component';
 import { GiftsLayoutComponent } from './Components/Gifts/gifts-layout/gifts-layout.component';
+import { LoginComponent } from './Components/Auth/login/login.component';
+import { RegisterComponent } from './Components/Auth/register/register.component';
 
 export const routes: Routes = 
 [{path:'', component:HomeLayoutComponent},
-{path:'gifts', component:GiftsLayoutComponent}
- 
+ {path:'login', component:LoginComponent},
+ {path:'register', component:RegisterComponent}, 
+ {path:'gifts', component:GiftsLayoutComponent}
 ];

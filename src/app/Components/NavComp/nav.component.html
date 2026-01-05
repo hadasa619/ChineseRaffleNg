@@ -1,4 +1,12 @@
 <nav>
-    <a routerLink="">Home</a>
-    <a routerLink="gifts">Gifts</a>
+    <a routerLink="login" routerLinkActive="isActiveRoute">Login</a>
+    <a routerLink="" routerLinkActive="isActiveRoute" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="gifts" routerLinkActive="isActiveRoute">Gifts</a>
 </nav>
+
+<style>
+    .isActiveRoute {
+        font-weight: bold;
+        color: blue;
+    }
+</style>
