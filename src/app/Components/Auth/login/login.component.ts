@@ -9,7 +9,7 @@ import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../Services/AuthService';
 
 @Component({
@@ -22,7 +22,8 @@ import { AuthService } from '../../../Services/AuthService';
     ButtonModule,
     PasswordModule,
     MessageModule,
-    ToastModule
+    ToastModule,
+    RouterModule
   ],
   providers: [MessageService], 
   templateUrl: './login.component.html',
@@ -32,7 +33,6 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private messageService = inject(MessageService);
 
   isLoading: boolean = false;
   errorMessage: string = '';
@@ -64,7 +64,8 @@ export class LoginComponent {
         },
         error: (err) => {
           this.isLoading = false;
-          this.errorMessage = err.error?.message || 'Username or password is incorrect';        }
+          this.errorMessage = err.error?.message || 'Server Error';       
+        }
       });
     }
   }

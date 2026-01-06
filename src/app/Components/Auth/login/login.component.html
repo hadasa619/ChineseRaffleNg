@@ -1,53 +1,44 @@
-
 <div class="flex justify-content-center align-items-center min-h-screen">
     <div class="card p-4 shadow-2 border-round w-full md:w-25rem bg-white">
         <h2 class="text-center mb-4">login</h2>
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
-            
+
             <div class="flex flex-column gap-2">
-                <input 
-                    pInputText 
-                    id="userName" 
-                    formControlName="userName" 
-                    [ngClass]="{ 'p-invalid': isInvalid('userName') }" 
-                    placeholder="Username" />
-                
+                <input pInputText id="userName" formControlName="userName"
+                    [ngClass]="{ 'p-invalid': isInvalid('userName') }" placeholder="Username" />
+
                 @if (isInvalid('userName')) {
-                    <p-message severity="error" text="Username is required" variant="simple" />
+                <p-message severity="error" text="Username is required" variant="simple" />
                 }
             </div>
 
             <div class="flex flex-column gap-2">
-                <p-password 
-                    id="password"
-                    formControlName="password" 
-                    [toggleMask]="true" 
-                    [feedback]="false"
-                    [ngClass]="{ 'p-invalid': isInvalid('password') }"
-                    placeholder="Password"
-                    styleClass="w-full"
+                <p-password id="password" formControlName="password" [toggleMask]="true" [feedback]="false"
+                    [ngClass]="{ 'p-invalid': isInvalid('password') }" placeholder="Password" styleClass="w-full"
                     inputStyleClass="w-full">
                 </p-password>
-                
+
                 @if (isInvalid('password')) {
-                    <p-message severity="error" text="Password is required" variant="simple" />
+                <p-message severity="error" text="Password is required" variant="simple" />
                 }
             </div>
 
             @if (errorMessage) {
-                <p-message severity="error" [text]="errorMessage" class="w-full" />
+            <p-message severity="error" [text]="errorMessage" class="w-full" />
             }
 
-            <p-button 
-                label="submit" 
-                type="submit" 
-                class="w-full" 
-                styleClass="w-full"
-                [loading]="isLoading" 
+            <p-button label="submit" type="submit" class="w-full" styleClass="w-full" [loading]="isLoading"
                 [disabled]="loginForm.invalid">
             </p-button>
-
+            <!-- <div class="register-link">
+                <span>Not registered?</span>
+                <p-button label="Create new account" mat-button routerLink="register"></p-button>
+            </div> -->
+            <p class="register-text flex-column gap-3 text-center">
+                Not registered? 
+                <a routerLink="/register" class="link text-lg">Create new account</a>
+            </p>
         </form>
     </div>
 </div>
