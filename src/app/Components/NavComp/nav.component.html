@@ -1,12 +1,40 @@
-<nav>
+<!-- <nav>
     <a routerLink="login" routerLinkActive="isActiveRoute">Login</a>
     <a routerLink="" routerLinkActive="isActiveRoute" [routerLinkActiveOptions]="{ exact: true }">Home</a>
     <a routerLink="gifts" routerLinkActive="isActiveRoute">Gifts</a>
+</nav> -->
+<nav class="flex gap-4 p-3 bg-white shadow-1 border-round-bottom-xl justify-content-center">
+    <a routerLink="login" 
+       routerLinkActive="isActiveRoute" 
+       class="no-underline text-700 hover:text-primary transition-colors duration-200">
+       Login
+    </a>
+
+    <a routerLink="" 
+       routerLinkActive="isActiveRoute" 
+       [routerLinkActiveOptions]="{ exact: true }"
+       class="no-underline text-700 hover:text-primary transition-colors duration-200">
+       Home
+    </a>
+
+    <a routerLink="gifts" 
+       routerLinkActive="isActiveRoute"
+       class="no-underline text-700 hover:text-primary transition-colors duration-200">
+       Gifts
+    </a>
 </nav>
 
 <style>
     .isActiveRoute {
         font-weight: bold;
-        color: blue;
+        color: var(--primary-color); 
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 2px;
+        font-size: larger;
     }
+    /* a{
+        margin-right: 15px;
+        text-decoration: none;
+        color: var(--text-color);
+    } */
 </style>

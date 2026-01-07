@@ -1,12 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { GiftService } from '../../../Services/GiftService';
 import { GetGiftDto } from '../../../Models/gift.model';
 import { AuthService } from '../../../Services/AuthService';
-
+import { SingleGiftComponent } from '../single-gift/single-gift.component';
+import { Button } from "primeng/button";
+import { GiftSortComponent } from "../gift-sort/gift-sort.component";
+import { GetCategoryWithGiftsDto } from '../../../Models/category.model';
+import { CategoryService } from '../../../Services/CategoryService';
 @Component({
   selector: 'app-gifts-layout',
   standalone: true,
-  imports: [],
+  imports: [SingleGiftComponent, Button, GiftSortComponent],
   templateUrl: './gifts-layout.component.html',
   styleUrl: './gifts-layout.component.scss'
 })
@@ -14,12 +18,18 @@ export class GiftsLayoutComponent {
 
   private giftService = inject(GiftService);
   private authService = inject(AuthService);
+  private categoryService = inject(CategoryService);
+
+  selectedSortMethod = signal<string>('');
+  categoriesWithGifts = signal<GetCategoryWithGiftsDto[]>([]);
+
   currentUserRole = this.authService.currentUserRole;
-  gifts?: GetGiftDto[];
+
+  gifts = signal<GetGiftDto[]>([]);
   ngOnInit(): void {
     this.giftService.getAllGifts().subscribe({
       next: (gifts) => {
-        this.gifts = gifts;
+        this.gifts.set(gifts);
         console.log('Gifts retrieved:', gifts);
       },
       error: (error) => {
@@ -28,4 +38,34 @@ export class GiftsLayoutComponent {
     });
   }
 
+  handleSortChange(newMethod: string) {
+    this.selectedSortMethod.set(newMethod);
+    if(this.selectedSortMethod() === 'category') {
+      this.sortByCategory();      
+    } else {
+      this.sortByPrice();
+    }
+  }
+  sortByPrice() {
+    this.giftService.getGiftsSortedByPrice().subscribe({
+      next: (gifts) => {
+        this.gifts.set(gifts);
+        console.log('Gifts retrieved:', gifts);
+      },
+      error: (error) => {
+        console.error('Error retrieving gifts:', error);
+      }
+    });
+  }
+  sortByCategory() {
+    this.categoryService.getAllCategoriesWithGifts().subscribe({
+      next: (categoriesWithGifts) => {
+        this.categoriesWithGifts.set(categoriesWithGifts);
+        console.log('Categories with gifts retrieved:', categoriesWithGifts);        
+      },
+      error: (error) => {
+        console.error('Error retrieving gifts:', error);
+      }
+    });
+  }
 }

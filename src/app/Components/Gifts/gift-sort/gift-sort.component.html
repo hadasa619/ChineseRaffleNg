@@ -1,0 +1,18 @@
+<div class="flex align-items-center justify-content-end mb-4 gap-3">
+  <span class="text-700 font-medium hidden md:block">
+    <i class="pi pi-sort-alt mr-2"></i>  Sort by:
+  </span>
+
+<div class="relative w-full md:w-15rem">
+  <p-dropdown 
+    [options]="sortOptions" 
+    [(ngModel)]="selectedSort" 
+    (onChange)="onSortChange($event.value)"
+    optionLabel="label" 
+    optionValue="value"
+    placeholder=""
+    styleClass="w-full border-round-xl shadow-1 custom-dropdown"
+    panelStyleClass="border-round-xl shadow-3">
+  </p-dropdown>
+</div>
+</div>

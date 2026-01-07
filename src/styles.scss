@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+/* src/styles.css */
+
+body {
+    color: var(--text-color); 
+    
+    background-color: var(--surface-ground); 
+    
+    font-family: var(--font-family);
+    margin: 0;
+
+}
+
+h1, h2, h3 {
+    color: var(--text-900);
+}
+
+a {
+    color: #1a5e5e; 
+    text-decoration: underline; 
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+a:hover {
+    color: var(--primary-color);
+    text-decoration-thickness: 2px;
+}
+button {
+    cursor: pointer;
+    font-weight: 500;
+}

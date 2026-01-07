@@ -1,6 +1,6 @@
 <div class="flex justify-content-center align-items-center min-h-screen">
     <div class="card p-4 shadow-2 border-round w-full md:w-25rem bg-white">
-        <h2 class="text-center mb-4">Register</h2>
+        <h2 class="text-center mb-4 text-4xl">Register</h2>
 
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
 
@@ -45,6 +45,10 @@
             <p-button label="submit" type="submit" class="w-full" styleClass="w-full" [loading]="isLoading"
                 [disabled]="registerForm.invalid">
             </p-button>
+                 <p class="register-text flex-column gap-3 text-center">
+                You have an account? 
+                <a routerLink="/login" class="link text-lg">Login here</a>
+            </p>
 
         </form>
     </div>

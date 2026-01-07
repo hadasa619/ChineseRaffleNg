@@ -25,6 +25,7 @@ login(credentials: LoginRequestDto): Observable<LoginResponseDto> {
         this.setSession(response);
         
         this.currentUserRole.set(response.user.role.toString() as 'Admin' | 'User');
+        console.log(this.isAdmin());
         
         localStorage.setItem('userRole', response.user.role.toString());
       })

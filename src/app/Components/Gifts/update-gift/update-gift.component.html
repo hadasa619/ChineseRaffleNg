@@ -1,0 +1,39 @@
+<div class="flex justify-content-center p-4">
+  <p-card header="Update Gift Details" class="w-full md:w-6 justify-content-center shadow-2 border-round-xl">
+
+    <form [formGroup]="giftForm" (ngSubmit)="onSave()" class="flex flex-column gap-3">
+
+<div class="flex flex-column align-items-center mb-5">
+  <div class="max-w-full w-fit shadow-4 border-round-xl overflow-hidden border-1 surface-border">
+    <img [src]="getPreviewUrl() || 'assets/gift/default-gift.png'" 
+         [alt]="giftForm.get('title')?.value || 'Gift Image'" 
+         class="w-full h-auto block max-h-25rem object-contain bg-white">
+  </div>
+</div>
+
+      <div class="flex flex-column gap-2">
+        <label for="title" class="font-bold text-800">Gift Name</label>
+        <input pInputText id="title" formControlName="title" placeholder="Enter gift name" />
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <label for="ticketPrice" class="font-bold text-800">Ticket Price</label>
+        <p-inputNumber id="ticketPrice" formControlName="ticketPrice" mode="currency" currency="ILS"
+          locale="he-IL"></p-inputNumber>
+      </div>
+      <!-- להוסיף בחירת מתנה, תורם וקטגוריה -->
+
+
+
+      <div class="mt-4 flex gap-2">
+        <button pButton type="submit" label="Save Changes" icon="pi pi-check" class="p-button-primary flex-grow-1"
+          [disabled]="giftForm.invalid" >
+        </button>
+        <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-secondary p-button-outlined"
+          routerLink="/gifts">
+        </button>
+      </div>
+
+    </form>
+  </p-card>
+</div>

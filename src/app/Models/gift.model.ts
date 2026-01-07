@@ -23,7 +23,7 @@ export interface GetGiftDto {
     title: string;
     ticketPrice: number;
     categoryId?: number;
-    image?: string;
+    image: string;
 }
 
 export interface GetGiftWithTicketsDto {

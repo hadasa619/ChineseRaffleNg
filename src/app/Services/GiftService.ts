@@ -14,7 +14,16 @@ export class GiftService {
     getAllGifts(): Observable<GetGiftDto[]> {
         return this.http.get<GetGiftDto[]>(this.apiUrl);
     }
-    
+
+    getGiftsSortedByCategory(): Observable<GetGiftDto[]> {
+        return this.http.get<GetGiftDto[]>(`${this.apiUrl}/sorted/category`);
+    }
+
+    getGiftsSortedByPrice(): Observable<GetGiftDto[]> {
+        return this.http.get<GetGiftDto[]>(`${this.apiUrl}/sorted/price`);
+    }
+
+
     getGiftById(id: number): Observable<GetGiftDto> {
         return this.http.get<GetGiftDto>(`${this.apiUrl}/${id}`);
     }
@@ -33,7 +42,7 @@ export class GiftService {
     }
 
     updateGift(id: number, giftData: UpdateGiftDto, imageFile?: File): Observable<void> {
-        const formData = new FormData();
+        const formData = new FormData();        
         Object.entries(giftData).forEach(([key, value]) => {
             if (value !== undefined && value !== null) {
                 formData.append(key, value.toString());

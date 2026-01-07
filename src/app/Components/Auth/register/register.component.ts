@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -21,7 +21,8 @@ import { AuthService } from '../../../Services/AuthService';
     ButtonModule,
     PasswordModule,
     MessageModule,
-    ToastModule
+    ToastModule,
+    RouterModule    
   ],
   providers: [MessageService],
   templateUrl: './register.component.html',

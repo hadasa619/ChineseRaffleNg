@@ -1,4 +1,49 @@
-<h1>Gifts</h1>
-@for (item of gifts; track item.id) {
-  <div>{{ item.title }}</div>
-} 
+<div class="text-center mb-5">
+<h1 class="text-4xl font-bold text-center text-primary mt-4 mb-2">
+  Choose Your Dreams!
+</h1>
+<p class="text-center text-600 mb-5">
+  Select your favorite gifts and enter the draw for a chance to win.
+</p>
+<div class="flex justify-content-center mb-4">
+    <div class="surface-ground border-left-3 border-primary p-3 shadow-1 flex align-items-center">
+        <i class="pi pi-info-circle text-primary mr-3 text-xl"></i>
+        <span class="text-700 font-medium">
+           Don't forget to complete your purchase in the cart to secure your entries!
+        </span>
+    </div>
+</div>
+  </div>
+<div class="col-12 md:col-6 lg:col-3 p-2">
+    <app-gift-sort (sortChange)="handleSortChange($event)"></app-gift-sort>
+</div>
+
+@if (selectedSortMethod() === 'category' && categoriesWithGifts().length > 0) {
+    
+    @for (cat of categoriesWithGifts(); track cat.id) {
+        @if (cat.gifts.length != 0)
+        {
+        <div class="category-group mb-6">
+            <h2 class="text-3xl font-bold mb-3 border-bottom-2 surface-border pb-2 text-primary ml-3">
+                {{ cat.name }}
+            </h2>            
+            <div class="grid">
+                @for (gift of cat.gifts; track gift.id) {
+                    <div class="col-12 md:col-6 lg:col-3 p-5">
+                        <app-single-gift [gift]="gift"></app-single-gift>
+                    </div>
+                }
+            </div>
+        </div>
+        }
+    }
+
+} @else {   
+    <div class="grid">
+        @for (item of gifts(); track item.id) {
+            <div class="col-12 md:col-6 lg:col-3 p-5">
+                <app-single-gift [gift]="item"></app-single-gift>
+            </div>
+        }
+    </div>
+}
