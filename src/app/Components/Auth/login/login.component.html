@@ -10,7 +10,9 @@
         </div>
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
-            
+            @if (errorMessage) {
+                <p-message severity="error" [text]="errorMessage" styleClass="w-full mb-2"></p-message>
+            }
             <div class="flex flex-column gap-2">
                 <label for="userName" class="font-bold text-800">Username</label>
                 <input pInputText id="userName" formControlName="userName"
@@ -35,10 +37,6 @@
                     <small class="p-error">Password is required</small>
                 }
             </div>
-
-            @if (errorMessage) {
-                <p-message severity="error" [text]="errorMessage" class="w-full"></p-message>
-            }
 
             <p-button label="Sign In" type="submit" class="w-full mt-2" 
                       styleClass="w-full p-button-lg" [loading]="isLoading"

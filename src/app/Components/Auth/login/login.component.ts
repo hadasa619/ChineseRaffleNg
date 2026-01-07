@@ -50,10 +50,13 @@ export class LoginComponent {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params['sessionExpired']) {
-      setTimeout(() => {
-        this.showSessionExpiredMessage();
-      }, 100);
+      this.errorMessage = 'Your session has expired. Please log in again to continue.';
     }
+    this.loginForm.valueChanges.subscribe(() => {
+    if (this.errorMessage) {
+      this.errorMessage = '';
+    }
+  });
     });
   }
   showSessionExpiredMessage() {

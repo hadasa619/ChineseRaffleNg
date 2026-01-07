@@ -1,52 +1,62 @@
 <div class="flex justify-content-center align-items-center min-h-screen">
     <div class="card p-4 shadow-2 border-round w-full md:w-25rem bg-white">
-        <h2 class="text-center mb-4 text-4xl">Register</h2>
-
+   <div class="text-center mb-5">
+            <h2 class="text-900 text-3xl font-medium mb-3">Register</h2>
+            <p class="text-600 font-medium">Please enter your details</p>
+        </div>
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
-
             <div class="flex flex-column gap-2">
+                <label for="userName" class="font-bold text-800">Username</label>
                 <input pInputText id="userName" formControlName="userName"
-                    [ngClass]="{ 'p-invalid': isInvalid('userName') }" placeholder="Username" />
-
+                    [ngClass]="{ 'p-invalid': isInvalid('userName') }" placeholder="Enter your username"
+                    class="w-full" />
                 @if (isInvalid('userName')) {
-                <p-message severity="error" text="Username is required" variant="simple" />
+                <small class="p-error">Username is required</small>
                 }
             </div>
-
             <div class="flex flex-column gap-2">
+                <label for="password" class="font-bold text-800">Password</label>
                 <p-password id="password" formControlName="password" [toggleMask]="true" [feedback]="false"
-                    [ngClass]="{ 'p-invalid': isInvalid('password') }" placeholder="Password" styleClass="w-full"
-                    inputStyleClass="w-full">
+                    [ngClass]="{ 'p-invalid': isInvalid('password') }" placeholder="Enter your password"
+                    styleClass="w-full" inputStyleClass="w-full">
                 </p-password>
 
                 @if (isInvalid('password')) {
-                <p-message severity="error" text="Password is required" variant="simple" />
+                <small class="p-error">Password is required</small>
                 }
             </div>
-            <div class="flex flex-column gap-2">
-                <input pInputText id="email" formControlName="email" [ngClass]="{ 'p-invalid': isInvalid('email') }"
-                    placeholder="Email" />
-
+                <div class="flex flex-column gap-2">
+                <label for="email" class="font-bold text-800">Email</label>
+                <input pInputText id="email" formControlName="email"
+                       [ngClass]="{ 'p-invalid': isInvalid('email') }" 
+                       placeholder="Enter your email" class="w-full" />
+                
                 @if (isInvalid('email')) {
-                <p-message severity="error" text="Email is required" variant="simple" />
+                    <small class="p-error">Email is required</small>
                 }
             </div>
+
             <div class="flex flex-column gap-2">
+                <label for="phoneNumber" class="font-bold text-800">Phone Number</label>
                 <input pInputText id="phoneNumber" formControlName="phoneNumber"
-                    [ngClass]="{ 'p-invalid': isInvalid('phoneNumber') }" placeholder="Phone Number" />
+                       [ngClass]="{ 'p-invalid': isInvalid('phoneNumber') }" 
+                       placeholder="Enter your phone number" class="w-full" />
 
                 @if (isInvalid('phoneNumber')) {
-                <p-message severity="error" text="Phone Number is required" variant="simple" />
+                    <small class="p-error">Phone Number is required</small>
                 }
             </div>
+
             @if (errorMessage) {
-            <p-message severity="error" [text]="errorMessage" class="w-full" />
+                <!-- <p-message severity="error" [text]="errorMessage" class="w-full"></p-message> -->
+                <small class="p-error">{{errorMessage}}</small>
             }
-            <p-button label="submit" type="submit" class="w-full" styleClass="w-full" [loading]="isLoading"
-                [disabled]="registerForm.invalid">
+
+            <p-button label="Sign Up" type="submit" class="w-full mt-2" styleClass="w-full p-button-lg"
+                [loading]="isLoading" [disabled]="registerForm.invalid">
             </p-button>
-                 <p class="register-text flex-column gap-3 text-center">
-                You have an account? 
+            <p class="register-text flex-column gap-3 text-center">
+                You have an account?
                 <a routerLink="/login" class="link text-lg">Login here</a>
             </p>
 
