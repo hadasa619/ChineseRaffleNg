@@ -3,21 +3,22 @@ import { GiftService } from '../../../Services/GiftService';
 import { GetGiftDto } from '../../../Models/gift.model';
 import { AuthService } from '../../../Services/AuthService';
 import { SingleGiftComponent } from '../single-gift/single-gift.component';
-import { Button } from "primeng/button";
+import { Button , ButtonModule } from "primeng/button";
 import { GiftSortComponent } from "../gift-sort/gift-sort.component";
 import { GetCategoryWithGiftsDto } from '../../../Models/category.model';
 import { CategoryService } from '../../../Services/CategoryService';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-gifts-layout',
   standalone: true,
-  imports: [SingleGiftComponent, Button, GiftSortComponent],
+  imports: [SingleGiftComponent, Button, GiftSortComponent, RouterLink, ButtonModule],
   templateUrl: './gifts-layout.component.html',
   styleUrl: './gifts-layout.component.scss'
 })
 export class GiftsLayoutComponent {
 
   private giftService = inject(GiftService);
-  private authService = inject(AuthService);
+  authService = inject(AuthService);
   private categoryService = inject(CategoryService);
 
   selectedSortMethod = signal<string>('');
@@ -46,6 +47,16 @@ export class GiftsLayoutComponent {
       this.sortByPrice();
     }
   }
+handleGiftDeleted(id: number) {
+  this.gifts.update(prev => prev.filter(g => g.id !== id));
+
+  this.categoriesWithGifts.update(categories => 
+    categories.map(category => ({
+      ...category,
+      gifts: category.gifts.filter(g => g.id !== id) // מסננים את המתנה מתוך כל קטגוריה
+    }))
+  );
+}
   sortByPrice() {
     this.giftService.getGiftsSortedByPrice().subscribe({
       next: (gifts) => {

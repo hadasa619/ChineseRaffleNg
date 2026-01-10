@@ -4,11 +4,13 @@ import { GiftsLayoutComponent } from './Components/Gifts/gifts-layout/gifts-layo
 import { LoginComponent } from './Components/Auth/login/login.component';
 import { RegisterComponent } from './Components/Auth/register/register.component';
 import { UpdateGiftComponent } from './Components/Gifts/update-gift/update-gift.component';
+import { AddGiftComponent } from './Components/Gifts/add-gift/add-gift.component';
 
 export const routes: Routes = 
 [{path:'', component:HomeLayoutComponent},
  {path:'login', component:LoginComponent},
  {path:'register', component:RegisterComponent}, 
  {path:'gifts', component:GiftsLayoutComponent},
- {path:'update-gift/:id',component:UpdateGiftComponent}
+ {path:'update-gift/:id',component:UpdateGiftComponent},
+ {path: 'add-gift', component:AddGiftComponent}
 ];

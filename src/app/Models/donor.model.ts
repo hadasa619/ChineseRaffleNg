@@ -19,3 +19,7 @@ export interface GetDonorDto {
     email: string;
     giftList: GetGiftDto[]; 
 }
+export interface ShowDonor {
+  id: number;
+  name: string;
+}

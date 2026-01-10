@@ -24,6 +24,7 @@ export interface GetGiftDto {
     ticketPrice: number;
     categoryId?: number;
     image: string;
+    donorId: number;
 }
 
 export interface GetGiftWithTicketsDto {

@@ -1,3 +1,4 @@
+  @if (!authService.isAdmin()) {
 <div class="text-center mb-5">
 <h1 class="text-4xl font-bold text-center text-primary mt-4 mb-2">
   Choose Your Dreams!
@@ -14,9 +15,22 @@
     </div>
 </div>
   </div>
+  }
+@else {
+  <div class="flex justify-content-center mt-4 mb-4">
+    <a routerLink="/add-gift" 
+       pButton 
+       label="Add New Gift" 
+       icon="pi pi-plus" 
+       class="bg-primary border-primary hover:bg-primary-reverse no-underline shadow-2 font-bold px-4 py-3">
+    </a>
+  </div>
+}
 <div class="col-12 md:col-6 lg:col-3 p-2">
     <app-gift-sort (sortChange)="handleSortChange($event)"></app-gift-sort>
 </div>
+
+
 
 @if (selectedSortMethod() === 'category' && categoriesWithGifts().length > 0) {
     
@@ -30,7 +44,7 @@
             <div class="grid">
                 @for (gift of cat.gifts; track gift.id) {
                     <div class="col-12 md:col-6 lg:col-3 p-5">
-                        <app-single-gift [gift]="gift"></app-single-gift>
+                        <app-single-gift [gift]="gift" (giftDeleted)="handleGiftDeleted($event)"></app-single-gift>
                     </div>
                 }
             </div>
@@ -42,7 +56,7 @@
     <div class="grid">
         @for (item of gifts(); track item.id) {
             <div class="col-12 md:col-6 lg:col-3 p-5">
-                <app-single-gift [gift]="item"></app-single-gift>
+                <app-single-gift [gift]="item" (giftDeleted)="handleGiftDeleted($event)"></app-single-gift>
             </div>
         }
     </div>

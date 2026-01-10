@@ -1,10 +1,12 @@
 
-import { Component, Input, inject, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 import { GetGiftDto } from '../../../Models/gift.model';
 import { AuthService } from '../../../Services/AuthService';
 import { environment } from '../../../../environments/environment';
 import { Button, ButtonDirective } from "primeng/button";
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
+import { GiftService } from '../../../Services/GiftService';
+
 
 @Component({
   selector: 'app-single-gift',
@@ -14,9 +16,13 @@ import { RouterLink } from '@angular/router';
   styleUrl: './single-gift.component.scss'})
 export class SingleGiftComponent {
   @Input({ required: true }) gift!: GetGiftDto;
+  @Output() giftDeleted = new EventEmitter<number>();
   
   authService = inject(AuthService);
   quantity = signal(1);
+  giftService = inject(GiftService);
+  private router = inject(Router);
+
 
   get imageUrl(): string {
     if (this.gift.image) {
@@ -27,16 +33,20 @@ export class SingleGiftComponent {
 
   addToCart() {
     console.log(`מוסיף ${this.quantity()} כרטיסים למתנה ${this.gift.title} לסל`);
-    // כאן תבוא הקריאה ל-CartService
-  }
-
-  editGift() {
-    console.log('עריכת מתנה:', this.gift.id);
+    
   }
 
   deleteGift() {
-    if (confirm('האם אתה בטוח שברצונך למחוק מתנה זו?')) {
-      console.log('מחיקת מתנה:', this.gift.id);
+    if (confirm('Are you sure you want to delete this gift?')) {
+      this.giftService.deleteGift(this.gift.id).subscribe({
+        next: () => {
+          console.log('Gift deleted successfully');
+          this.giftDeleted.emit(this.gift.id);
+        },
+        error: (err) => { 
+          console.error('Error deleting gift', err);
+        }
+      });
     }
   }
 }

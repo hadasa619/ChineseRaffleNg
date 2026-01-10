@@ -2,7 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GiftService } from '../../../Services/GiftService';
-import { GetGiftDto, UpdateGiftDto } from '../../../Models/gift.model';
+import { GetGiftDto, UpdateGiftDto, AddGiftDto } from '../../../Models/gift.model';
 import { ShowDonor } from '../../../Models/donor.model';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,10 +16,11 @@ import { DonorService } from '../../../Services/DonorService';
 import { DropdownModule } from 'primeng/dropdown';
 import { CategoryService } from '../../../Services/CategoryService';
 import { GetCategoryDto } from '../../../Models/category.model';
+
 @Component({
-  selector: 'app-update-gift',
+  selector: 'app-add-gift',
   standalone: true,
-  imports: [
+    imports: [
     CommonModule,
     ReactiveFormsModule,
     InputTextModule,
@@ -30,10 +31,10 @@ import { GetCategoryDto } from '../../../Models/category.model';
     MessageModule,
     DropdownModule
   ],
-  templateUrl: './update-gift.component.html',
-  styleUrl: './update-gift.component.scss'
+  templateUrl: './add-gift.component.html',
+  styleUrl: './add-gift.component.scss'
 })
-export class UpdateGiftComponent implements OnInit {
+export class AddGiftComponent {
   private fb = inject(FormBuilder);
   private giftService = inject(GiftService);
   private route = inject(ActivatedRoute);
@@ -66,16 +67,16 @@ export class UpdateGiftComponent implements OnInit {
     });
   }
 
-  loadGiftData() {
-    this.giftService.getGiftById(this.giftId).subscribe({
-      next: (gift: GetGiftDto) => {
-        console.log('Server response:', gift);
-        this.giftForm.patchValue(gift);
-        this.currentImageUrl = gift.image;
-      },
-      error: (err) => console.error('Error loading gift', err)
-    });
-  }
+  // loadGiftData() {
+  //   this.giftService.getGiftById(this.giftId).subscribe({
+  //     next: (gift: GetGiftDto) => {
+  //       console.log('Server response:', gift);
+  //       this.giftForm.patchValue(gift);
+  //       this.currentImageUrl = gift.image;
+  //     },
+  //     error: (err) => console.error('Error loading gift', err)
+  //   });
+  // }
   loadDonors() {
     this.donorService.getAllDonors().subscribe({
       next: (data) => {
@@ -89,7 +90,7 @@ export class UpdateGiftComponent implements OnInit {
     this.categoryService.getAllCategories().subscribe({
       next: (data) => {
         this.categoriesList.set(data);
-        this.loadGiftData();
+        // this.loadGiftData();
       },
       error: (err) => console.error('Failed to load categories', err)
     });
@@ -124,18 +125,17 @@ export class UpdateGiftComponent implements OnInit {
   onSave() {
     if (this.giftForm.valid) {
       this.errorMessage = '';
-      const updatedGift: UpdateGiftDto = this.giftForm.getRawValue();
+      const newGift: AddGiftDto = this.giftForm.getRawValue();
 
-      this.giftService.updateGift(this.giftId, updatedGift, this.selectedFile || undefined).subscribe({
+      this.giftService.addGift(newGift, this.selectedFile || undefined).subscribe({
         next: () => {
           this.router.navigate(['/gifts']);
         },
         error: (err) => {
-          console.error('Update failed', err);
-          this.errorMessage = 'Failed to update gift. Please try again.';
+          console.error('Add failed', err);
+          this.errorMessage = 'Failed to add gift. Please try again.';
         }
       });
     }
   }
 } 
-
