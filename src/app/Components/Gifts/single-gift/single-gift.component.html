@@ -1,8 +1,7 @@
 <div class="surface-card shadow-2 border-round p-3 flex flex-column h-full">
-  
+
   <div class="relative mb-3 h-full">
-    <img [src]="imageUrl" [alt]="gift.title" 
-         class="w-full border-round aspect-square object-cover shadow-1">
+    <img [src]="imageUrl" [alt]="gift.title" class="w-full border-round aspect-square object-cover shadow-1">
     <div class="absolute top-0 right-0 bg-primary text-white font-bold p-2 border-round-left shadow-2">
       {{ gift.ticketPrice }} ₪
     </div>
@@ -12,43 +11,31 @@
     <div class="text-xl font-bold text-900">{{ gift.title }}</div>
   </div>
 
-  <div class="mt-auto border-t-1 surface-border pt-3">   
+  <div class="mt-auto border-t-1 surface-border pt-3">
     @if (!authService.isAdmin()) {
-      <div class="flex align-items-center justify-content-between gap-2">
-        <div class="flex align-items-center gap-2">
-          <!-- <label class="text-sm font-medium">quantity:</label> -->
-          <input type="number" 
-                 [value]="quantity()" 
-                 (input)="quantity.set($any($event.target).value)"
-                 class="p-inputtext p-component w-4rem text-center p-2 border-round border-1 surface-border" 
-                 min="1">
-        </div>
-        <button (click)="addToCart()" 
-                class="p-button p-component bg-primary border-none p-2 border-round flex-grow-1 font-bold flex justify-content-center">
-          <i class="pi pi-shopping-cart mr-2"></i> add to cart
-        </button>
+    <div class="flex align-items-center justify-content-between gap-2">
+      <div class="flex align-items-center gap-2">
+        <!-- <label class="text-sm font-medium">quantity:</label> -->
+        <input type="number" [value]="quantity()" (input)="quantity.set($any($event.target).value)"
+          class="p-inputtext p-component w-4rem text-center p-2 border-round border-1 surface-border" min="1">
       </div>
+      <button (click)="addToCart()"
+        class="p-button p-component bg-primary border-none p-2 border-round flex-grow-1 font-bold flex justify-content-center">
+        <i class="pi pi-shopping-cart mr-2"></i> add to cart
+      </button>
+    </div>
     }
 
     @if (authService.isAdmin()) {
-      <div class="flex gap-2">
-        <!-- <button (click)="editGift()" 
-                class="p-button p-component p-button-outlined border-primary text-primary p-2 flex-1 border-round">
-          <i class="pi pi-pencil mr-2"></i> updateGift
-        </button> -->
-      <button 
-    pButton
-    type="button"
-    icon="pi pi-pencil" 
-    label="Edit" 
-    class="p-button-outlined p-button-success" 
-    [routerLink]="['/update-gift', gift.id]">
-    </button>
-        <button (click)="deleteGift()" 
-                class="p-button p-component p-button-danger bg-red-500 border-none p-2 flex-1 border-round">
-          <i class="pi pi-trash mr-2"></i> deleteGift
-        </button>
-      </div>
+    <div class="flex gap-2">
+      <button pButton type="button" icon="pi pi-pencil" label="Edit" class="p-button-outlined p-button-success flex-1"
+        [routerLink]="['update-gift', gift.id]">
+      </button>
+
+      <button pButton type="button" icon="pi pi-trash" label="Delete" class="p-button-outlined p-button-danger flex-1"
+        (click)="deleteGift()">
+      </button>
+    </div>
     }
+
   </div>
-</div>

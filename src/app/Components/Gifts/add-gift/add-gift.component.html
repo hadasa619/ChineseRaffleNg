@@ -1,6 +1,5 @@
 <div class="flex justify-content-center p-4">
-  <p-card header="Update Gift Details" class="w-full md:w-6 justify-content-center shadow-2 border-round-xl">
-
+  <p-card header="Insert Gift Details" class="w-full md:w-6 justify-content-center shadow-2 border-round-xl">
     <form [formGroup]="giftForm" (ngSubmit)="onSave()" class="flex flex-column gap-3">
 
 <div class="flex flex-column align-items-center mb-5">
@@ -10,7 +9,6 @@
          class="w-full h-auto block max-h-25rem object-contain bg-white">
   </div>
 </div>
-
       <div class="flex flex-column gap-2">
         <label for="title" class="font-bold text-800">Gift Name</label>
         <input pInputText id="title" formControlName="title" placeholder="Enter gift name" />
@@ -70,9 +68,8 @@
     
     <small *ngIf="selectedFile" class="text-green-600">Selected: {{ selectedFile.name }}</small>
 </div>
-
       <div class="mt-4 flex gap-2">
-        <button pButton type="submit" label="Save Changes" icon="pi pi-check" class="p-button-primary flex-grow-1"
+        <button pButton type="submit" label="Add Gift" icon="pi pi-check" class="p-button-primary flex-grow-1"
           [disabled]="giftForm.invalid" >
         </button>
         <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-secondary p-button-outlined"

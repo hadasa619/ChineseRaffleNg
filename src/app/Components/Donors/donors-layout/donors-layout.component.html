@@ -1,0 +1,62 @@
+<p-toast></p-toast>
+<div class="card p-4">
+    <h2 class="text-primary mb-4">Donors Management</h2>
+  <div class="flex justify-content-center mt-4 mb-4">
+    <a routerLink="add-donor" 
+       pButton 
+       label="Add New Donor" 
+       icon="pi pi-plus" 
+       class="bg-primary border-primary hover:bg-primary-reverse no-underline shadow-2 font-bold px-4 py-3">
+    </a>
+  </div>
+
+    <p-table [value]="donors()" class="shadow-2 border-round overflow-hidden">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th class="text-center">Gifts</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-donor>
+            <tr>
+                <td>{{ donor.name }}</td>
+                <td>{{ donor.email }}</td>
+                <td>{{ donor.phoneNumber }}</td>
+                <td class="text-center">
+                    <p-button icon="pi pi-gift" label="View Gifts"
+                        styleClass="p-button-rounded p-button-text p-button-sm" (onClick)="op.toggle($event)">
+                    </p-button>
+
+                    <p-overlayPanel #op>
+                        <div class="p-3 border-round shadow-4" style="min-width: 200px">
+                            <h4 class="mt-0 border-b-1 surface-border pb-2 text-primary">Gifts by {{ donor.name }}</h4>
+                            <ul class="list-none p-0 m-0">
+                                @for (gift of donor.giftList; track gift.id) {
+                                <li class="py-2 border-bottom-1 surface-border flex align-items-center">
+                                    <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                                    <span class="font-medium text-700">{{ gift.title }}</span>
+                                </li>
+                                } @empty {
+                                <li class="text-500 italic">No gifts donated yet</li>
+                                }
+                            </ul>
+                        </div>
+                    </p-overlayPanel>
+                </td>
+                <td>
+                    <button pButton type="button" icon="pi pi-pencil" label="Edit"
+                        class="p-button-outlined p-button-success text-sm" [routerLink]="['update-donor', donor.id]">
+                    </button>
+                </td>
+                <td>
+                     <button pButton type="button" icon="pi pi-trash" label="Delete" class="p-button-outlined p-button-danger flex-1 text-sm"
+                     (click)="deleteDonor(donor.id)">
+                   </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

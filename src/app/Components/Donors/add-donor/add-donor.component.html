@@ -1,0 +1,48 @@
+
+<div class="flex justify-content-center p-4">
+  <p-card header="Insert Donor Details" class="w-full md:w-8 lg:w-6 justify-content-center shadow-2 border-round-xl">
+
+    <form [formGroup]="donorForm" (ngSubmit)="onSave()" class="flex flex-column gap-3">
+
+      <div class="flex flex-column gap-2">
+        <label for="name" class="font-bold text-800">Donor Name</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-user"></i>
+          <input pInputText id="name" formControlName="name" class="w-full" placeholder="Enter donor name" />
+        </span>
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <label for="phoneNumber" class="font-bold text-800">Phone Number</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-phone"></i>
+          <input pInputText id="phoneNumber" formControlName="phoneNumber" class="w-full" />
+        </span>
+        @if (donorForm.get('phoneNumber')?.invalid && donorForm.get('phoneNumber')?.touched) {
+          <small class="p-error">Please enter a valid phone number</small>
+        }
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <label for="email" class="font-bold text-800">Email Address</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-envelope"></i>
+          <input pInputText id="email" formControlName="email" class="w-full" placeholder="example@mail.com" />
+        </span>
+        @if (donorForm.get('email')?.invalid && donorForm.get('email')?.touched) {
+          <small class="p-error">Please enter a valid email address</small>
+        }
+      </div>
+
+      <div class="mt-4 flex gap-2">
+        <button pButton type="submit" label="Add Donor" icon="pi pi-check" 
+                class="p-button-primary flex-grow-1" [disabled]="donorForm.invalid">
+        </button>
+        <button pButton type="button" label="Cancel" icon="pi pi-times" 
+                class="p-button-secondary p-button-outlined" routerLink="/donors">
+        </button>
+      </div>
+
+    </form>
+  </p-card>
+</div>

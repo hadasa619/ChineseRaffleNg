@@ -66,24 +66,15 @@ export class AddGiftComponent {
       categoryId: ['', [Validators.required]]
     });
   }
-
-  // loadGiftData() {
-  //   this.giftService.getGiftById(this.giftId).subscribe({
-  //     next: (gift: GetGiftDto) => {
-  //       console.log('Server response:', gift);
-  //       this.giftForm.patchValue(gift);
-  //       this.currentImageUrl = gift.image;
-  //     },
-  //     error: (err) => console.error('Error loading gift', err)
-  //   });
-  // }
   loadDonors() {
     this.donorService.getAllDonors().subscribe({
       next: (data) => {
         this.donorsList.set(data.map(d => ({ id: d.id, name: d.name })));
         this.loadCategories();
       },
-      error: (err) => console.error('Failed to load donors', err)
+      error: (err) => {
+        console.error('Failed to load donors', err)
+      }
     });
   }
     loadCategories() {

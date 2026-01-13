@@ -1,4 +1,4 @@
-import { GetGiftDto } from './gift.model';
+import { GetGiftDto, GetGiftForDonorDto } from './gift.model';
 
 export interface AddDonorDto {
     name: string;
@@ -17,7 +17,7 @@ export interface GetDonorDto {
     name: string;
     phoneNumber: string;
     email: string;
-    giftList: GetGiftDto[]; 
+    giftList: GetGiftForDonorDto[]; 
 }
 export interface ShowDonor {
   id: number;
