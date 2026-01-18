@@ -1,0 +1,85 @@
+<p-toast></p-toast>
+
+<div class="card p-4">
+    <h2 class="text-primary mb-4">Tickets Management</h2>
+
+    <div class="flex align-items-center justify-content-start mb-4 gap-3">
+        <span class="text-700 font-medium hidden md:block">
+            <i class="pi pi-search mr-2"></i> Find Gift:
+        </span>
+
+        <div class="relative w-full md:w-15rem">
+                    <p-dropdown 
+        [options]="gifts()" 
+        optionLabel="title" 
+        optionValue="id" 
+        placeholder="Enter Gift Name"
+        styleClass="w-full"
+        [filter]="true" 
+        [showClear]="true"
+         (onChange)="onGiftSelect($event)">
+        filterBy="title">
+    </p-dropdown>
+
+        </div>
+    </div>
+
+    <p-table [value]="filteredGifts() || gifts()" class="shadow-2 border-round overflow-hidden">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Image</th>
+                <th>Gift Name</th>
+                <th class="text-center">Purchases Count</th>
+                <!-- <th class="text-center">Action</th> -->
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-gift>
+            <tr>
+                <td>
+                    <img [src]="gift.image || 'assets/images/default-gift.png'" [alt]="gift.title"
+                        class="w-4rem h-4rem border-round shadow-1 object-cover">
+                </td>
+                <td class="font-bold text-800">{{ gift.title }}</td>
+                <td class="text-center">
+                    <p-tag [value]="gift.quantitySold"
+                        styleClass="bg-transparent border-1 border-primary text-primary px-3 py-2"
+                        [style]="{'font-size': '1.5rem', 'font-weight': '800', 'min-width': '3rem'}" [rounded]="true">
+                    </p-tag>
+                </td>
+                <td class="text-center">
+                    <button pButton type="button" icon="pi pi-users" label="View Buyers"
+                        class="p-button-outlined p-button-primary text-sm" (click)="openBuyersDialog(gift.id)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="displayBuyersDialog" [header]="'Buyers Details - ' + selectedGiftTitle" [modal]="true"
+    [style]="{ width: '50vw' }" [breakpoints]="{ '960px': '75vw', '641px': '90vw' }" [draggable]="false"
+    [resizable]="false" styleClass="custom-dialog">
+
+    <p-table [value]="buyersForSelectedGift()" [scrollable]="true" scrollHeight="400px" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Buyer Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-buyer>
+            <tr>
+                <td>{{ buyer.userName }}</td>
+                <td>{{ buyer.email }}</td>
+                <td>{{ buyer.phoneNumber }}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="4" class="text-center p-4 text-500 italic">No tickets purchased for this gift yet.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>

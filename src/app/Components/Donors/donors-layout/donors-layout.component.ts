@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { GetDonorDto } from '../../../Models/donor.model';
+import { GetDonorDto, ShowDonor } from '../../../Models/donor.model';
 import { AuthService } from '../../../Services/AuthService';
 import { DonorService } from '../../../Services/DonorService';
 import { TableModule } from 'primeng/table';
@@ -10,10 +10,13 @@ import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
+import { ReactiveFormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-donors-layout',
   standalone: true,
-  imports: [TableModule, ButtonModule, OverlayPanelModule, InputTextModule, TooltipModule, RouterLink, ToastModule],
+  imports: [TableModule, ButtonModule, OverlayPanelModule, InputTextModule, TooltipModule, RouterLink, ToastModule, DropdownModule, ReactiveFormsModule],
   templateUrl: './donors-layout.component.html',
   styleUrl: './donors-layout.component.scss'
 })
@@ -22,11 +25,24 @@ export class DonorsLayoutComponent {
   authService = inject(AuthService);
   private donorService = inject(DonorService);
   messageService = inject(MessageService);
+  selectedDonorId = signal<number | null>(null);
+  filteredDonors = signal<ShowDonor[] | null>(null);
 
+onDonorSelect(event: any) {
+  const id = event.value;
+  this.selectedDonorId.set(id);
+  if (!this.selectedDonorId()) {
+        this.filteredDonors.set(this.donors());
+    } else {
+        const result = this.donors().filter(d => d.id === this.selectedDonorId());
+        this.filteredDonors.set(result);
+    }
+ }
 
   ngOnInit(): void {
     this.donorService.getAllDonors().subscribe({
       next: (donors) => {
+
         this.donors.set(donors);
         console.log('Donors retrieved:', donors);
       },

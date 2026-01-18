@@ -39,6 +39,8 @@ export interface GetGiftWithBuyersDto {
     id: number;
     title: string;
     categoryId?: number;
+    image?: string;
+    quantitySold: number;
     buyers: GetUserDto[];
 }
 export interface GetGiftForDonorDto {

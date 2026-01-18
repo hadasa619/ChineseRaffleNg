@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { AddGiftDto, GetGiftDto, UpdateGiftDto } from '../Models/gift.model';
+import { AddGiftDto, GetGiftDto, GetGiftWithBuyersDto, UpdateGiftDto } from '../Models/gift.model';
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +26,9 @@ export class GiftService {
 
     getGiftById(id: number): Observable<GetGiftDto> {
         return this.http.get<GetGiftDto>(`${this.apiUrl}/${id}`);
+    }
+    getGiftsWithBuyers(): Observable<GetGiftWithBuyersDto[]> {
+        return this.http.get<GetGiftWithBuyersDto[]>(`${this.apiUrl}/with-buyers`);
     }
 
     addGift(giftData: AddGiftDto, imageFile?: File): Observable<GetGiftDto> {

@@ -8,6 +8,7 @@ import { AddGiftComponent } from './Components/Gifts/add-gift/add-gift.component
 import { DonorsLayoutComponent } from './Components/Donors/donors-layout/donors-layout.component';
 import { UpdateDonorComponent } from './Components/Donors/update-donor/update-donor.component';
 import { AddDonorComponent } from './Components/Donors/add-donor/add-donor.component';
+import { TicketsLayoutComponent } from './Components/Tickets/tickets-layout/tickets-layout.component';
 
 export const routes: Routes = 
 [{path:'', component:HomeLayoutComponent},
@@ -19,5 +20,6 @@ export const routes: Routes =
  {path:'donors',component:DonorsLayoutComponent},
  {path:'donors/add-donor', component:AddDonorComponent},
  {path:'donors/update-donor/:id',component:UpdateDonorComponent},
+ {path:'tickets', component:TicketsLayoutComponent},
  {path:'**', redirectTo:''}
 ];
