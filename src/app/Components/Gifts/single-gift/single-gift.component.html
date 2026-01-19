@@ -3,12 +3,14 @@
   <div class="relative mb-3 h-full">
     <img [src]="imageUrl" [alt]="gift.title" class="w-full border-round aspect-square object-cover shadow-1">
     <div class="absolute top-0 right-0 bg-primary text-white font-bold p-2 border-round-left shadow-2">
-      {{ gift.ticketPrice }} ₪
+      {{ gift.ticketPrice }} $
     </div>
   </div>
 
   <div class="flex flex-column gap-2 mb-4 flex-grow-1 text-center">
-    <div class="text-xl font-bold text-900">{{ gift.title }}</div>
+    <div class="text-900 font-bold text-xl mb-2 line-height-3 tracking-tight text-center px-2">
+      {{gift.title}}
+    </div>
   </div>
 
   <div class="mt-auto border-t-1 surface-border pt-3">

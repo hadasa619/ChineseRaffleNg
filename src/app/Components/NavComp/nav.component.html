@@ -1,52 +1,86 @@
-<!-- <nav>
-    <a routerLink="login" routerLinkActive="isActiveRoute">Login</a>
-    <a routerLink="" routerLinkActive="isActiveRoute" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a routerLink="gifts" routerLinkActive="isActiveRoute">Gifts</a>
-</nav> -->
-<nav class="flex gap-4 p-3 bg-white shadow-1 border-round-bottom-xl justify-content-center">
-    <a routerLink="login" 
-       routerLinkActive="isActiveRoute" 
-       class="no-underline text-700 hover:text-primary transition-colors duration-200">
-       Login
-    </a>
+<header class="bg-white shadow-1 border-round-bottom-xl sticky top-0 z-5">
+    <div class="flex flex-column align-items-center justify-content-center pt-4 pb-2 cursor-pointer" routerLink="">
+        <div class="flex align-items-center gap-3">
+            <i class="pi pi-gift text-primary text-5xl"></i>
+            <div class="flex flex-column line-height-1">
+                <h1 class="m-0 text-4xl font-bold text-900 tracking-tight">CHINESE RAFFLE</h1>
+                <small class="text-xs text-500 font-medium uppercase tracking-widest text-center">The Grand Auction</small>
+            </div>
+        </div>
+    </div>
 
-    <a routerLink="" 
-       routerLinkActive="isActiveRoute" 
-       [routerLinkActiveOptions]="{ exact: true }"
-       class="no-underline text-700 hover:text-primary transition-colors duration-200">
-       Home
-    </a>
+    <nav class="flex align-items-center px-6 pb-3 pt-2 border-top-1 border-50">
+        
+        <div class="flex-1 hidden md:flex"></div>
 
-    <a routerLink="gifts" 
-       routerLinkActive="isActiveRoute"
-       class="no-underline text-700 hover:text-primary transition-colors duration-200">
-       Gifts
-    </a>
-    @if(authService.isAdmin()) {
-    <a routerLink="donors" 
-       routerLinkActive="isActiveRoute"
-       class="no-underline text-700 hover:text-primary transition-colors duration-200">
-       Donors
-    </a>
-     <a routerLink="tickets" 
-       routerLinkActive="isActiveRoute"
-       class="no-underline text-700 hover:text-primary transition-colors duration-200">
-       Tickets
-    </a>
-}
-</nav>
+        <div class="flex gap-5 justify-content-center">
+            <a routerLink="" routerLinkActive="isActiveRoute" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Home</a>
+            <a routerLink="gifts" routerLinkActive="isActiveRoute" class="nav-link">Gifts</a>
+            @if(authService.isAdmin()) {
+                <a routerLink="donors" routerLinkActive="isActiveRoute" class="nav-link">Donors</a>
+                <a routerLink="tickets" routerLinkActive="isActiveRoute" class="nav-link">Tickets</a>
+            }
+        </div>
 
+        <div class="flex-1 flex justify-content-end">
+            <a routerLink="login" 
+               routerLinkActive="active-login-btn"
+               class="login-btn no-underline flex align-items-center gap-2 px-4 py-2 border-2 border-round-3xl transition-all duration-200">
+               <i class="pi pi-user text-lg"></i>
+               <span class="font-bold text-lg">Login</span>
+            </a>
+        </div>
+    </nav>
+</header>
 <style>
-    .isActiveRoute {
-        font-weight: bold;
-        color: var(--primary-color); 
-        border-bottom: 2px solid var(--primary-color);
-        padding-bottom: 2px;
-        font-size: larger;
+    
+    header {
+        transition: all 0.3s ease;
     }
-    /* a{
-        margin-right: 15px;
+
+    /* עיצוב הלינקים */
+    .nav-link {
         text-decoration: none;
-        color: var(--text-color);
-    } */
+        color: var(--text-color-secondary);
+        font-weight: 500;
+        font-size: 1.1rem;
+        transition: all 0.2s ease;
+        padding: 4px 0;
+        position: relative;
+    }
+
+    .nav-link:hover {
+        color: var(--primary-color);
+    }
+
+    /* עיצוב הלינק הפעיל */
+    .isActiveRoute {
+        font-weight: 700 !important;
+        color: var(--primary-color) !important;
+    }
+
+    /* אפקט קו תחתון מודרני ללינק הפעיל */
+    .isActiveRoute::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+
+    /* לוגו */
+    .tracking-tight { letter-spacing: -1px; }
+    .tracking-widest { letter-spacing: 4px; }
+
+    /* Sticky Header */
+    .sticky {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95); /* שקיפות עדינה */
+        backdrop-filter: blur(8px); /* אפקט זכוכית */
+    }
 </style>

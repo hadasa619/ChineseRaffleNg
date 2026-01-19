@@ -1,1 +1,57 @@
-<p>home-layout works!</p>
+<p-toast></p-toast>
+<app-dashboard></app-dashboard>
+@if(authService.isAdmin())
+{
+<div class="mt-8 border-round p-5 text-white" style="background: linear-gradient(135deg, #10b981 0%, #064e3b 100%);">
+    <div class="flex flex-column align-items-center text-center">
+        <i class="pi pi-gift mb-3" style="font-size: 3rem;"></i>
+        <h2 class="text-3xl font-bold mb-2">Grand Raffle Ceremony</h2>
+        <p class="mb-4 text-green-100">Ready to find out who the lucky winners are? This action will close the raffle and generate the results file.</p>
+        
+        <button pButton 
+                label="Run Raffle & Download Results" 
+                icon="pi pi-star" 
+                class="p-button-warning p-button-lg shadow-4"
+                (click)="confirmRaffle()">
+        </button>
+    </div>
+</div>
+<p-confirmDialog></p-confirmDialog>
+}
+<p-dialog [(visible)]="showSuccessDialog" 
+          [modal]="true" 
+          [closable]="true" 
+          [style]="{width: '450px'}" 
+          styleClass="success-dialog">
+    
+    <div class="flex flex-column align-items-center text-center p-4">
+        <div class="bg-green-100 border-circle flex align-items-center justify-content-center mb-4 pulse-animation" 
+             style="width: 80px; height: 80px">
+            <i class="pi pi-check text-green-500 text-5xl"></i>
+        </div>
+
+        <h1 class="text-4xl font-bold text-900 mb-2">Congratulations!</h1>
+        <p class="text-xl text-600 mb-4">The raffle has been completed successfully!</p>
+
+        <div class="surface-100 border-round p-3 mb-4 w-full">
+            <p class="text-700 m-0">The results file <b>raffle-results.zip</b></p>
+            <p class="text-700 m-0">is now on your computer.</p>
+        </div>
+
+        <button pButton label="Great, thanks!" 
+                class="p-button-success p-button-lg w-full font-bold" 
+                (click)="showSuccessDialog = false">
+        </button>
+    </div>
+</p-dialog>
+
+<style>
+    .pulse-animation {
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(74, 222, 128, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+    }
+</style>

@@ -9,14 +9,18 @@
         <span class="p-input-icon-left">
           <i class="pi pi-user"></i>
           <input pInputText id="name" formControlName="name" class="w-full" placeholder="Enter donor name" />
+          
         </span>
+          @if (donorForm.get('name')?.invalid && donorForm.get('name')?.touched) {
+          <small class="p-error">Please enter a valid name</small>
+        }
       </div>
 
       <div class="flex flex-column gap-2">
         <label for="phoneNumber" class="font-bold text-800">Phone Number</label>
         <span class="p-input-icon-left">
           <i class="pi pi-phone"></i>
-          <input pInputText id="phoneNumber" formControlName="phoneNumber" class="w-full" />
+          <input pInputText id="phoneNumber" formControlName="phoneNumber" class="w-full" placeholder="Enter donor phone"/>
         </span>
         @if (donorForm.get('phoneNumber')?.invalid && donorForm.get('phoneNumber')?.touched) {
           <small class="p-error">Please enter a valid phone number</small>

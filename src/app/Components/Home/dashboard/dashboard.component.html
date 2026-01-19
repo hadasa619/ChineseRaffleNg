@@ -1,0 +1,59 @@
+<div class="grid p-4 mt-5" dir="ltr">
+    <div class="col-12 md:col-3">
+        <p-card header="Total Revenue" subheader="Actual sales">
+            <div class="flex justify-content-between">
+                <span class="text-4xl font-bold text-green-600">
+                    {{ displayRevenue() | currency:'USD' }}
+                </span>
+                <i class="pi pi-money-bill text-4xl text-green-500"></i>
+            </div>
+        </p-card>
+    </div>
+
+    <div class="col-12 md:col-3">
+        <p-card header="Tickets Sold" subheader="Raffle reach">
+            <div class="flex justify-content-between">
+                <span class="text-4xl font-bold text-blue-600">
+                    {{ displayTickets() }}
+                </span>
+                <i class="pi pi-ticket text-4xl text-blue-500"></i>
+            </div>
+        </p-card>
+    </div>
+
+    <div class="col-12 md:col-3">
+        <p-card header="Donors" subheader="Total contributors">
+            <div class="flex justify-content-between">
+                <span class="text-4xl font-bold text-orange-600">
+                    {{ displayDonors() }}
+                </span>
+                <i class="pi pi-heart text-4xl text-orange-500"></i>
+            </div>
+        </p-card>
+    </div>
+
+    <div class="col-12 md:col-3">
+        <p-card header="Gifts" subheader="In the raffle">
+            <div class="flex justify-content-between">
+                <span class="text-4xl font-bold text-purple-600">
+                    {{ displayGifts() }}
+                </span>
+                <i class="pi pi-gift text-4xl text-purple-500"></i>
+            </div>
+        </p-card>
+    </div>
+
+    <!-- <div class="col-12 lg:col-8 mt-4 mx-auto">
+        <p-card header="Most Popular Gifts">
+            <div style="height: 350px;">
+                @if (chartData()) {
+                    <p-chart type="pie" [data]="chartData()" [options]="chartOptions()"></p-chart>
+                } @else {
+                    <div class="flex justify-content-center align-items-center h-full">
+                        <i class="pi pi-spin pi-spinner mr-2"></i> No data for chart
+                    </div>
+                }
+            </div>
+        </p-card>
+    </div> -->
+</div>

@@ -12,12 +12,15 @@
       <div class="flex flex-column gap-2">
         <label for="title" class="font-bold text-800">Gift Name</label>
         <input pInputText id="title" formControlName="title" placeholder="Enter gift name" />
+        @if(giftForm.get('title')?.invalid && giftForm.get('title')?.touched) {
+            <small class="p-error">Gift name is required</small>
+        }
       </div>
 
       <div class="flex flex-column gap-2">
         <label for="ticketPrice" class="font-bold text-800">Ticket Price</label>
-        <p-inputNumber id="ticketPrice" formControlName="ticketPrice" mode="currency" currency="ILS"
-          locale="he-IL"></p-inputNumber>
+        <p-inputNumber id="ticketPrice" formControlName="ticketPrice" mode="currency" currency="USD"
+          locale="en-us"></p-inputNumber>
       </div>
       <div class="flex flex-column gap-2">
     <label for="donor" class="font-bold text-800">Donor</label>

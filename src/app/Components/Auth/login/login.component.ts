@@ -85,7 +85,7 @@ export class LoginComponent {
       this.authService.login(loginData).subscribe({
         next: (response) => {
           this.isLoading = false;
-          this.router.navigate(['/gifts']); 
+          this.router.navigate(['/home']); 
         },
         error: (err) => {
           this.isLoading = false;
