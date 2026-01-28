@@ -9,6 +9,7 @@ import { DonorsLayoutComponent } from './Components/Donors/donors-layout/donors-
 import { UpdateDonorComponent } from './Components/Donors/update-donor/update-donor.component';
 import { AddDonorComponent } from './Components/Donors/add-donor/add-donor.component';
 import { TicketsLayoutComponent } from './Components/Tickets/tickets-layout/tickets-layout.component';
+import { BasketComponent } from './Components/UserComps/basket/basket.component';
 
 export const routes: Routes = 
 [{path:'', component:HomeLayoutComponent},
@@ -21,5 +22,6 @@ export const routes: Routes =
  {path:'donors/add-donor', component:AddDonorComponent},
  {path:'donors/update-donor/:id',component:UpdateDonorComponent},
  {path:'tickets', component:TicketsLayoutComponent},
+ {path:'basket/myBasket', component:BasketComponent},
  {path:'**', redirectTo:''}
 ];
