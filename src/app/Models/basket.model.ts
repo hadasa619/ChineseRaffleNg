@@ -13,4 +13,7 @@ export interface GetBasketDto {
     userId: number;
     giftId: number;
     quantity: number;
+    giftTitle: string;
+    giftImage?: string;
+    giftTicketPrice: number;
 }

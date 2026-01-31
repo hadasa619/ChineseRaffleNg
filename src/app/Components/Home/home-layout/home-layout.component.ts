@@ -47,7 +47,7 @@ export class HomeLayoutComponent {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Yes, Draw Now!',
       rejectLabel: 'Cancel',
-      acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-danger',
       accept: () => {
         this.runRaffleProcess();
       }
@@ -71,14 +71,14 @@ export class HomeLayoutComponent {
         angle: 60,
         spread: 55,
         origin: { x: 0 },
-        colors: ['#10b981', '#fbbf24']
+        colors: ['#10b981', '#fbbf24','#3b82f6', '#ff1111']
       });
       confetti({
         particleCount: 3,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
-        colors: ['#3b82f6', '#ffffff']
+        colors: ['#3b82f6', '#ff1111', '#10b981', '#fbbf24']
       });
       if (Date.now() < end) {
         requestAnimationFrame(frame);

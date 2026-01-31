@@ -4,6 +4,7 @@ import { AuthService } from '../../Services/AuthService';
 import { SidebarModule } from 'primeng/sidebar';
 import { GetBasketDto } from '../../Models/basket.model';
 import { BasketComponent } from '../UserComps/basket/basket.component';
+import { BasketService } from '../../Services/BasketService';
 
 @Component({
   selector: 'app-nav',
@@ -14,13 +15,27 @@ import { BasketComponent } from '../UserComps/basket/basket.component';
 })
 export class NavComponent {
   authService = inject(AuthService);
+  basketService = inject(BasketService);
   visibleSidebar: boolean = false;
-  // basketData: GetBasketDto | null = null;
+  basketItems: GetBasketDto[]  = [];
 
+ngOnInit() {
+    this.basketService.basketItems$.subscribe(items => {
+      this.basketItems = items;
+    });
 
-
-  toggleSidebar() {
-    this.visibleSidebar = !this.visibleSidebar;
+    this.basketService.loadBasket();
   }
+  // loadBasket(): void {
+  //   this.basketService.getMyBasket().subscribe({
+  //     next: (data) => this.basketItems = data,
+  //     error: (err) => console.error('Failed to load basket', err)
+  //   });
+  // }
+
+
+  // toggleSidebar() {
+  //   this.visibleSidebar = !this.visibleSidebar;
+  // }
 
 }

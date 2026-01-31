@@ -23,11 +23,13 @@
             <a routerLink="tickets" routerLinkActive="isActiveRoute" class="nav-link">Tickets</a>
             }
             @else {
-            <a (click)="visibleSidebar = true" class="nav-link cursor-pointer">
+            <a (click)=basketService.isSidebarVisible.set(true) class="nav-link cursor-pointer">
                 <i class="pi pi-shopping-cart text-3xl ml-2"></i>
             </a>
 
-            <p-sidebar [(visible)]="visibleSidebar" position="left" [modal]="true" [dismissible]="true" appendTo="body"
+            <p-sidebar [visible]="basketService.isSidebarVisible()" 
+            (visibleChange)="basketService.isSidebarVisible.set($event)"
+            position="left" [modal]="true" [dismissible]="true" appendTo="body"
                 styleClass="w-30rem custom-basket-sidebar">
 
                 <div class="p-4">
@@ -35,7 +37,7 @@
                         <i class="pi pi-shopping-cart mr-2 text-2xl"></i> My Basket
                     </h2>
                 </div>
-                <app-basket></app-basket>
+                <app-basket [basketItems]="basketItems"></app-basket>
             </p-sidebar> }
         </div>
 

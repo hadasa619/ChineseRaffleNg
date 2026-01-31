@@ -1,24 +1,44 @@
-import { Component, Input } from '@angular/core';
-import { GetBasketDto,UpdateBasketDto } from '../../../Models/basket.model';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common'; // הכרחי ל-Standalone
+import { GetBasketDto } from '../../../Models/basket.model';
 import { BasketService } from '../../../Services/BasketService';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
-import { inject } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import confetti from 'canvas-confetti';
 
 @Component({
   selector: 'app-basket',
   standalone: true,
-  imports: [TableModule, ButtonModule, InputNumberModule, ToastModule],
+  imports: [
+    CommonModule, 
+    TableModule, 
+    ButtonModule, 
+    InputNumberModule, 
+    ToastModule, 
+    DialogModule, 
+    ConfirmDialogModule
+  ],
   templateUrl: './basket.component.html',
   styleUrl: './basket.component.scss'
 })
-export class BasketComponent {
+export class BasketComponent implements OnInit {
+  // הזרקת שירותים
+  public basketService = inject(BasketService);
+  private confirmationService = inject(ConfirmationService);
+  private messageService = inject(MessageService);
 
-private basketService = inject(BasketService);
+  showSuccessDialog: boolean = false;
 
-  @Input() basketItems: GetBasketDto[] = []; 
+  @Input() basketItems: GetBasketDto[] = [];
+
+  ngOnInit(): void {
+    console.log('Basket items received:', this.basketItems);
+  }
 
   updateQuantity(item: GetBasketDto, change: number): void {
     const newQuantity = item.quantity + change;
@@ -39,6 +59,72 @@ private basketService = inject(BasketService);
   }
 
   calculateTotal(): number {
-    return this.basketItems.reduce((sum, item) => sum + (item.quantity), 0);
+    return this.basketItems.reduce((sum, item) => sum + (item.quantity * item.giftTicketPrice), 0);
+  }
+
+  calculateTickets(): number {
+    return this.basketItems.reduce((sum, item) => sum + item.quantity, 0);
+  }
+
+  buyTickets(): void {
+    this.basketService.buyTickets().subscribe({
+      next: () => {
+        // 1. איפוס המערך המקומי
+        this.basketItems = [];
+        
+        // 2. פתיחת הדיאלוג לפני סגירת הסיידבר
+        this.showSuccessDialog = true;
+        
+        // 3. עדכון ה-Signal בשרות לסגירת הסיידבר
+        this.basketService.isSidebarVisible.set(false);
+        
+        // 4. הפעלת הקונפטי
+        this.fireConfetti();
+      },
+      error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Purchase failed' });
+        console.error('Purchase failed', err);
+      }
+    });
+  }
+
+  confirmBuying() {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to finally buy all the tickets?',
+      header: 'Buy Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Yes, Buy Now!',
+      rejectLabel: 'Cancel',
+      rejectButtonStyleClass: 'p-button-danger',
+      accept: () => {
+        this.buyTickets();
+      }
+    });
+  }
+
+  private fireConfetti() {
+    const duration = 3 * 1000;
+    const end = Date.now() + duration;
+
+    const frame = () => {
+      confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ['#3b82f6', '#ff1111', '#10b981', '#fbbf24']
+      });
+      confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ['#3b82f6', '#ff1111', '#10b981', '#fbbf24']
+      });
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    };
+    frame();
   }
 }
