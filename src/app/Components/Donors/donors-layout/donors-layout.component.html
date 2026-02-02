@@ -1,45 +1,27 @@
 <p-toast></p-toast>
 <div class="card p-4">
     <div class="mb-5 border-bottom-1 border-200 pb-3">
-    <h2 class="text-900 font-bold text-3xl mb-1 tracking-tight">Donors Management</h2>
-    <p class="text-600 m-0">Manage your donors</p>
-</div>
-  <div class="flex justify-content-center mt-4 mb-4">
-    <a routerLink="add-donor" 
-       pButton 
-       label="Add New Donor" 
-       icon="pi pi-plus" 
-       class="bg-primary border-primary hover:bg-primary-reverse no-underline shadow-2 font-bold px-4 py-3">
-    </a>
-  </div>
-<div class="flex align-items-center justify-content-start mb-4 gap-3">
-  <span class="text-700 font-medium hidden md:block">
-    <i class="pi pi-search mr-2"></i>  Find Donor:
-  </span>
+        <h2 class="text-900 font-bold text-3xl mb-1 tracking-tight">Donors Management</h2>
+        <p class="text-600 m-0">Manage your donors</p>
+    </div>
 
-<div class="relative w-full md:w-15rem">
-        <p-dropdown 
-        [options]="donors()" 
-        optionLabel="name" 
-        optionValue="id" 
-        placeholder="Enter Donor Name"
-        styleClass="w-full"
-        [filter]="true" 
-        [showClear]="true"
-         (onChange)="onDonorSelect($event)">
-        filterBy="name">
-    </p-dropdown>
-</div>
-</div>
+    <div class="flex justify-content-center mt-4 mb-4">
+        <a routerLink="add-donor" pButton label="Add New Donor" icon="pi pi-plus"
+            class="bg-primary border-primary hover:bg-primary-reverse no-underline shadow-2 font-bold px-4 py-3"></a>
+    </div>
 
+    <p-table [value]="donors()" [lazy]="true" (onLazyLoad)="loadDonors($event)" [paginator]="true" [rows]="rows()"
+        [totalRecords]="totalCount()" [loading]="loading()" [rowsPerPageOptions]="[5, 10, 20]"
+        [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} donors"
+        class="shadow-2 border-round overflow-hidden">
 
-    <p-table [value]="filteredDonors() || donors()" class="shadow-2 border-round overflow-hidden">
         <ng-template pTemplate="header">
             <tr>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
                 <th class="text-center">Gifts</th>
+                <th>Actions</th>
             </tr>
         </ng-template>
 
@@ -52,32 +34,26 @@
                     <p-button icon="pi pi-gift" label="View Gifts"
                         styleClass="p-button-rounded p-button-text p-button-sm" (onClick)="op.toggle($event)">
                     </p-button>
-
                     <p-overlayPanel #op>
-                        <div class="p-3 border-round shadow-4" style="min-width: 200px">
-                            <h4 class="mt-0 border-b-1 surface-border pb-2 text-primary">Gifts by {{ donor.name }}</h4>
-                            <ul class="list-none p-0 m-0">
-                                @for (gift of donor.giftList; track gift.id) {
-                                <li class="py-2 border-bottom-1 surface-border flex align-items-center">
-                                    <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                                    <span class="font-medium text-700">{{ gift.title }}</span>
-                                </li>
-                                } @empty {
-                                <li class="text-500 italic">No gifts donated yet</li>
-                                }
-                            </ul>
-                        </div>
+                        @if(donor.giftList.length > 0)
+                        {
+                        @for (gift of donor.giftList; track gift.id) {
+                        <div><i class="pi pi-check-circle" style="color: green; vertical-align: middle;"></i>
+                            {{ gift.title }}</div>
+                        }
+                    }
+                    @else {
+                        <div>This donor has no gifts yet.</div>
+                    }
                     </p-overlayPanel>
                 </td>
                 <td>
-                    <button pButton type="button" icon="pi pi-pencil" label="Edit"
-                        class="p-button-outlined p-button-success text-sm" [routerLink]="['update-donor', donor.id]">
-                    </button>
-                </td>
-                <td>
-                     <button pButton type="button" icon="pi pi-trash" label="Delete" class="p-button-outlined p-button-danger flex-1 text-sm"
-                     (click)="deleteDonor(donor.id)">
-                   </button>
+                    <div class="flex gap-2">
+                        <button pButton icon="pi pi-pencil" class="p-button-outlined p-button-success"
+                            [routerLink]="['update-donor', donor.id]"></button>
+                        <button pButton icon="pi pi-trash" class="p-button-outlined p-button-danger"
+                            (click)="deleteDonor(donor.id)"></button>
+                    </div>
                 </td>
             </tr>
         </ng-template>

@@ -33,7 +33,8 @@
         <ng-template pTemplate="body" let-gift>
             <tr>
                 <td>
-                    <img [src]="gift.image || 'assets/images/default-gift.png'" [alt]="gift.title"
+                    <img [src]="gift.image ? environment.serverUrl + '/' + gift.image : 'assets/images/default-gift.png'"
+                    [alt]="gift.title"
                         class="w-4rem h-4rem border-round shadow-1 object-cover">
                 </td>
                 <td class="text-lg font-semibold text-700">

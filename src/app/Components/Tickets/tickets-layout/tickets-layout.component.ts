@@ -10,11 +10,15 @@ import { MessageService } from 'primeng/api';
 import { GetGiftDto, GetGiftWithBuyersDto } from '../../../Models/gift.model';
 import { GiftService } from '../../../Services/GiftService';
 import { GetUserDto } from '../../../Models/user.model';
-import { TagModule } from 'primeng/tag'; // הייבוא הספציפי עבור ה-Tag
+import { TagModule } from 'primeng/tag'; 
+import { environment } from '../../../../environments/environment';
+
 @Component({
   selector: 'app-tickets-layout',
   standalone: true,
-  imports: [CommonModule, TableModule, DialogModule, ButtonModule, DropdownModule, BadgeModule, ToastModule, TagModule],
+  imports: [CommonModule, TableModule, DialogModule, ButtonModule,
+     DropdownModule, BadgeModule, 
+    ToastModule, TagModule],
   templateUrl: './tickets-layout.component.html',
   styleUrl: './tickets-layout.component.scss'
 })
@@ -28,9 +32,14 @@ export class TicketsLayoutComponent {
 
   selectedGiftId = signal<number | null>(null);
   filteredGifts = signal<GetGiftWithBuyersDto[] | null>(null);
+  environment = environment;
+
+
+  
   
   onGiftSelect(event: any) {
     const id = event.value;
+
     this.selectedGiftId.set(id);
     if (!this.selectedGiftId()) {
           this.filteredGifts.set(this.gifts());

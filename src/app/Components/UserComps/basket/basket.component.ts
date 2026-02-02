@@ -10,6 +10,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import confetti from 'canvas-confetti';
+import { environment } from '../../../../environments/environment';
+import { MessageModule } from 'primeng/message';
+import { GiftService } from '../../../Services/GiftService';
 
 @Component({
   selector: 'app-basket',
@@ -21,16 +24,19 @@ import confetti from 'canvas-confetti';
     InputNumberModule, 
     ToastModule, 
     DialogModule, 
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    MessageModule
   ],
   templateUrl: './basket.component.html',
   styleUrl: './basket.component.scss'
 })
 export class BasketComponent implements OnInit {
-  // הזרקת שירותים
+
   public basketService = inject(BasketService);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
+  giftService = inject(GiftService)
+  environment = environment;
 
   showSuccessDialog: boolean = false;
 

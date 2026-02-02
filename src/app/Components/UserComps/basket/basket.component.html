@@ -1,5 +1,12 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
+    @if (giftService.isRaffleLocked()) {
+  <p-message 
+    severity="error" 
+    text="Sales closed! Raffle completed. Further purchases are disabled."
+    styleClass="w-full mt-2">
+  </p-message>
+    }
 
 <div class="basket-container" dir="ltr">
     <p-table [value]="basketItems" styleClass="p-datatable-sm">
@@ -8,7 +15,7 @@
                 
                 <td class="text-center" style="width: 30%">
                     @if (item.giftImage) {
-                        <img [src]="'assets/images/' + item.giftImage" 
+                        <img [src]="environment.serverUrl +'/'+ item.giftImage" 
                              [alt]="item.giftTitle" 
                              class="w-4rem h-4rem border-round shadow-1 mb-1 mt-2" />
                     } @else {
@@ -25,6 +32,7 @@
                     <div class="flex align-items-center justify-content-center gap-3">
                         <div class="flex align-items-center gap-2">
                             <button pButton icon="pi pi-minus" 
+                            [disabled]="giftService.isRaffleLocked()"
                                     class="p-button-rounded p-button-text p-button-sm bg-gray-100 text-700"
                                     (click)="updateQuantity(item, -1)"
                                     [disabled]="item.quantity <= 1"></button>
@@ -32,6 +40,7 @@
                             <span class="font-bold text-lg w-2rem text-center">{{item.quantity}}</span>
                             
                             <button pButton icon="pi pi-plus" 
+                            [disabled]="giftService.isRaffleLocked()"
                                     class="p-button-rounded p-button-text p-button-sm bg-gray-100 text-700"
                                     (click)="updateQuantity(item, 1)"></button>
                         </div>
@@ -76,6 +85,7 @@
             </div>
 
             <button pButton label="Checkout Now" (click)="confirmBuying()"
+            [disabled]="giftService.isRaffleLocked()"
                     class="w-full p-button-rounded p-button-primary shadow-2 font-bold py-3 uppercase">
             </button>
         </div>

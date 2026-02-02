@@ -22,45 +22,51 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class DonorsLayoutComponent {
   donors = signal<GetDonorDto[]>([]);
+  totalCount = signal(0);
+  loading = signal(false);
+  rows = signal(10);
+  first = signal(0);
+
   authService = inject(AuthService);
   private donorService = inject(DonorService);
   messageService = inject(MessageService);
-  selectedDonorId = signal<number | null>(null);
-  filteredDonors = signal<ShowDonor[] | null>(null);
-
-onDonorSelect(event: any) {
-  const id = event.value;
-  this.selectedDonorId.set(id);
-  if (!this.selectedDonorId()) {
-        this.filteredDonors.set(this.donors());
-    } else {
-        const result = this.donors().filter(d => d.id === this.selectedDonorId());
-        this.filteredDonors.set(result);
-    }
- }
 
   ngOnInit(): void {
-    this.donorService.getAllDonors().subscribe({
-      next: (donors) => {
+    this.loadDonors();
+  }
 
-        this.donors.set(donors);
-        console.log('Donors retrieved:', donors);
+  loadDonors(event?: any) {
+    this.loading.set(true);
+    
+    const page = event ? (event.first / event.rows) + 1 : 1;
+    const size = event ? event.rows : this.rows();
+
+    this.donorService.getAllDonors(page, size).subscribe({
+      next: (response) => {
+        console.log('התגובה מהשרת:', response);
+        this.donors.set(response.items);
+        this.totalCount.set(response.totalCount);
+        this.loading.set(false);
       },
-      error: (error) => {
-        console.error('Error fetching donors:', error);
+      error: (err) => {
+        console.error(err);
+        this.loading.set(false);
       }
     });
   }
+
+  onPageChange(event: any) {
+    this.first.set(event.first);
+    this.rows.set(event.rows);
+    this.loadDonors(event);
+  }
+
   deleteDonor(id: number) {
-    if (confirm('Are you sure you want to delete this donor?')) {
+    if (confirm('Are you sure?')) {
       this.donorService.deleteDonor(id).subscribe({
-        next: (res) => {
-          this.donors.update(prev => prev.filter(d => d.id !== id));
-          this.messageService.add({ severity: 'success', summary: 'Deleted', detail: `Donor ${id} deleted successfully` });
-        },
-        error: (err) => {
-          const errorMessage = err.error?.message || 'Delete failed';
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: errorMessage });
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Deleted' });
+          this.loadDonors(); 
         }
       });
     }

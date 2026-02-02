@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, effect, inject, signal } from '@angular/core';
 import { GetGiftDto } from '../../../Models/gift.model';
 import { AuthService } from '../../../Services/AuthService';
 import { environment } from '../../../../environments/environment';
@@ -8,12 +8,13 @@ import { RouterLink, Router } from '@angular/router';
 import { GiftService } from '../../../Services/GiftService';
 import { BasketService } from '../../../Services/BasketService';
 import { AddBasketDto } from '../../../Models/basket.model';
+import { MessageModule } from 'primeng/message';
 
 
 @Component({
   selector: 'app-single-gift',
   standalone: true,
-  imports: [Button, ButtonDirective, RouterLink],
+  imports: [Button, ButtonDirective, RouterLink, MessageModule],
   templateUrl: './single-gift.component.html',
   styleUrl: './single-gift.component.scss'
 })
@@ -34,6 +35,7 @@ export class SingleGiftComponent {
     }
     return 'assets/images/default-gift.png';
   }
+
 
   addToBasket() {
     const basket: AddBasketDto = {

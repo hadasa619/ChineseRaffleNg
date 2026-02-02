@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { GetDonorDto, AddDonorDto, UpdateDonorDto } from '../Models/donor.model';
+import { PagedResult } from '../Models/page.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,10 @@ export class DonorService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.serverUrl}/api/Donor`;
 
-  getAllDonors(): Observable<GetDonorDto[]> {
-    return this.http.get<GetDonorDto[]>(this.apiUrl);
+  getAllDonors(pageNumber: number = 1, pageSize: number = 10): Observable<PagedResult<GetDonorDto>> {
+    return this.http.get<PagedResult<GetDonorDto>>(
+      `${this.apiUrl}?pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
   }
 
   getDonorById(id: number): Observable<GetDonorDto> {

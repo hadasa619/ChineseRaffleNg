@@ -76,15 +76,15 @@ export class UpdateGiftComponent implements OnInit {
       error: (err) => console.error('Error loading gift', err)
     });
   }
-  loadDonors() {
-    this.donorService.getAllDonors().subscribe({
-      next: (data) => {
-        this.donorsList.set(data.map(d => ({ id: d.id, name: d.name })));
-        this.loadCategories();
-      },
-      error: (err) => console.error('Failed to load donors', err)
-    });
-  }
+loadDonors() {
+  this.donorService.getAllDonors(1, 1000).subscribe({
+    next: (data) => {
+      this.donorsList.set(data.items.map(d => ({ id: d.id, name: d.name })));
+      this.loadCategories();
+    },
+    error: (err) => console.error('Failed to load donors', err)
+  });
+}
     loadCategories() {
     this.categoryService.getAllCategories().subscribe({
       next: (data) => {
