@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../Services/AuthService';
+import { BasketService } from '../../../Services/BasketService';
 
 
 @Component({
@@ -32,6 +33,7 @@ import { AuthService } from '../../../Services/AuthService';
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private basketService = inject(BasketService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   token = localStorage.getItem('token');
@@ -85,6 +87,7 @@ export class LoginComponent {
       this.authService.login(loginData).subscribe({
         next: (response) => {
           this.isLoading = false;
+          this.basketService.loadBasket();
           this.router.navigate(['/home']); 
         },
         error: (err) => {

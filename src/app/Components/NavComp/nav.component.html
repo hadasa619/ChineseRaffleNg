@@ -10,44 +10,49 @@
         </div>
     </div>
 
-    <nav class="flex align-items-center px-6 pb-3 pt-2 border-top-1 border-50">
+    <nav class="flex align-items-center px-6 pb-3 pt-2 border-top-1 border-50 flex-wrap">
 
-        <div class="flex-1 hidden md:flex"></div>
-
-        <div class="flex gap-5 justify-content-center">
-            <a routerLink="" routerLinkActive="isActiveRoute" [routerLinkActiveOptions]="{ exact: true }"
-                class="nav-link">Home</a>
-            <a routerLink="gifts" routerLinkActive="isActiveRoute" class="nav-link">Gifts</a>
-            @if(authService.isAdmin()) {
-            <a routerLink="donors" routerLinkActive="isActiveRoute" class="nav-link">Donors</a>
-            <a routerLink="tickets" routerLinkActive="isActiveRoute" class="nav-link">Tickets</a>
-            }
-            @else {
-            <a (click)=basketService.isSidebarVisible.set(true) class="nav-link cursor-pointer">
-                <i class="pi pi-shopping-cart text-3xl ml-2"></i>
-            </a>
-
-            <p-sidebar [visible]="basketService.isSidebarVisible()" 
-            (visibleChange)="basketService.isSidebarVisible.set($event)"
-            position="left" [modal]="true" [dismissible]="true" appendTo="body"
-                styleClass="w-30rem custom-basket-sidebar">
-
-                <div class="p-4">
-                    <h2 class="text-900 font-bold text-2xl mb-4 border-bottom-1 border-200 pb-3">
-                        <i class="pi pi-shopping-cart mr-2 text-2xl"></i> My Basket
-                    </h2>
-                </div>
-                <app-basket [basketItems]="basketItems"></app-basket>
-            </p-sidebar> }
+        <div class="w-full flex justify-content-center">
+            <div class="flex flex-row flex-wrap gap-4 md:gap-6 justify-content-center items-center">
+                <a routerLink="" routerLinkActive="isActiveRoute" [routerLinkActiveOptions]="{ exact: true }"
+                    class="nav-link">Home</a>
+                <a routerLink="gifts" routerLinkActive="isActiveRoute" class="nav-link">Gifts</a>
+                @if(authService.isAdmin()) {
+                <a routerLink="donors" routerLinkActive="isActiveRoute" class="nav-link">Donors</a>
+                <a routerLink="tickets" routerLinkActive="isActiveRoute" class="nav-link">Tickets</a>
+                }
+                @else {
+                <a (click)="openBasket()" class="nav-link cursor-pointer ">
+                    <i class="pi pi-shopping-cart mr-2 text-2xl"></i>
+                </a>
+                }
+                @if(authService.isLoggedIn()) {
+                <button pButton type="button" (click)="logout()"
+                    class="login-btn no-underline flex align-items-center gap-2 px-4 py-2 border-2 border-round-3xl transition-all duration-200">
+                    <i class="pi pi-sign-out text-lg"></i>
+                    <span class="font-bold text-lg">Logout</span>
+                </button>
+                }
+                @else {
+                <a routerLink="login" routerLinkActive="active-login-btn"
+                    class="login-btn no-underline flex align-items-center gap-2 px-4 py-2 border-2 border-round-3xl transition-all duration-200">
+                    <i class="pi pi-user text-lg"></i>
+                    <span class="font-bold text-lg">Login</span>
+                </a>
+                }
+            </div>
         </div>
 
-        <div class="flex-1 flex justify-content-end">
-            <a routerLink="login" routerLinkActive="active-login-btn"
-                class="login-btn no-underline flex align-items-center gap-2 px-4 py-2 border-2 border-round-3xl transition-all duration-200">
-                <i class="pi pi-user text-lg"></i>
-                <span class="font-bold text-lg">Login</span>
-            </a>
-        </div>
+        <p-sidebar [visible]="basketService.isSidebarVisible()"
+            (visibleChange)="basketService.isSidebarVisible.set($event)" position="left" [modal]="true"
+            [dismissible]="true" appendTo="body" styleClass="w-30rem custom-basket-sidebar">
+            <div class="p-4">
+                <h2 class="text-900 font-bold text-2xl mb-4 border-bottom-1 border-200 pb-3">
+                    <i class="pi pi-shopping-cart mr-2 text-2xl"></i> My Basket
+                </h2>
+            </div>
+            <app-basket [basketItems]="basketItems"></app-basket>
+        </p-sidebar>
     </nav>
 </header>
 <style>
@@ -55,7 +60,6 @@
         transition: all 0.3s ease;
     }
 
-    /* עיצוב הלינקים */
     .nav-link {
         text-decoration: none;
         color: var(--text-color-secondary);
@@ -70,13 +74,11 @@
         color: var(--primary-color);
     }
 
-    /* עיצוב הלינק הפעיל */
     .isActiveRoute {
         font-weight: 700 !important;
         color: var(--primary-color) !important;
     }
 
-    /* אפקט קו תחתון מודרני ללינק הפעיל */
     .isActiveRoute::after {
         content: '';
         position: absolute;
@@ -88,7 +90,6 @@
         border-radius: 2px;
     }
 
-    /* לוגו */
     .tracking-tight {
         letter-spacing: -1px;
     }
@@ -97,14 +98,11 @@
         letter-spacing: 4px;
     }
 
-    /* Sticky Header */
     .sticky {
         position: sticky;
         top: 0;
         width: 100%;
         background: rgba(255, 255, 255, 0.95);
-        /* שקיפות עדינה */
         backdrop-filter: blur(8px);
-        /* אפקט זכוכית */
     }
 </style>

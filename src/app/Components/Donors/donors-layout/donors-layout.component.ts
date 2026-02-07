@@ -8,7 +8,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,6 +30,10 @@ export class DonorsLayoutComponent {
   authService = inject(AuthService);
   private donorService = inject(DonorService);
   messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+
+  selectedDonorId = signal<number | null>(null);
+  filteredDonors = signal<GetDonorDto[] | null>(null);
 
   ngOnInit(): void {
     this.loadDonors();
@@ -37,7 +41,7 @@ export class DonorsLayoutComponent {
 
   loadDonors(event?: any) {
     this.loading.set(true);
-    
+
     const page = event ? (event.first / event.rows) + 1 : 1;
     const size = event ? event.rows : this.rows();
 
@@ -54,6 +58,17 @@ export class DonorsLayoutComponent {
       }
     });
   }
+  onDonorSelect(event: any) {
+    const id = event.value;
+
+    this.selectedDonorId.set(id);
+    if (!this.selectedDonorId()) {
+      this.filteredDonors.set(this.donors());
+    } else {
+      const result = this.donors().filter(d => d.id === this.selectedDonorId());
+      this.filteredDonors.set(result);
+    }
+  }
 
   onPageChange(event: any) {
     this.first.set(event.first);
@@ -62,13 +77,25 @@ export class DonorsLayoutComponent {
   }
 
   deleteDonor(id: number) {
-    if (confirm('Are you sure?')) {
-      this.donorService.deleteDonor(id).subscribe({
-        next: () => {
-          this.messageService.add({ severity: 'success', summary: 'Deleted' });
-          this.loadDonors(); 
-        }
-      });
-    }
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this donor?',
+      header: 'Delete Donor',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Delete',
+      rejectLabel: 'Cancel',
+      rejectButtonStyleClass: 'p-button-danger',
+      accept: () => {
+        this.donorService.deleteDonor(id).subscribe({
+          next: () => {
+            this.messageService.add({ severity: 'success', summary: 'Deleted', detail: 'Donor deleted' });
+            this.loadDonors();
+          },
+          error: (err) => {
+            console.error('Error deleting donor', err);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete donor' });
+          }
+        });
+      }
+    });
   }
 }

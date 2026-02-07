@@ -65,17 +65,13 @@ export class AddGiftComponent implements OnInit {
     });
   }
 
-  // טעינת כל הנתונים הנדרשים לטופס
   loadInitialData() {
     this.loadingData.set(true);
     
-    // טעינת תורמים - מבקשים כמות גדולה כדי שיופיעו ב-Dropdown
     this.donorService.getAllDonors(1, 1000).subscribe({
       next: (response) => {
-        // מחלצים את המערך מתוך response.items
         this.donorsList.set(response.items.map(d => ({ id: d.id, name: d.name })));
         
-        // לאחר הצלחה טוענים קטגוריות
         this.loadCategories();
       },
       error: (err) => {
@@ -88,7 +84,6 @@ export class AddGiftComponent implements OnInit {
   loadCategories() {
     this.categoryService.getAllCategories().subscribe({
       next: (data: any) => {
-        // התאמה למקרה שהקטגוריות גם עברו לפגינציה
         const categories = data.items ? data.items : data;
         this.categoriesList.set(categories);
         this.loadingData.set(false);

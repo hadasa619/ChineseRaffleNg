@@ -9,6 +9,7 @@ import { GiftService } from '../../../Services/GiftService';
 import { BasketService } from '../../../Services/BasketService';
 import { AddBasketDto } from '../../../Models/basket.model';
 import { MessageModule } from 'primeng/message';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 
 @Component({
@@ -26,6 +27,8 @@ export class SingleGiftComponent {
   basketService = inject(BasketService);
   quantity = signal(1);
   giftService = inject(GiftService);
+  messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
   private router = inject(Router);
 
 
@@ -38,6 +41,10 @@ export class SingleGiftComponent {
 
 
   addToBasket() {
+    if (!this.authService.isLoggedIn()) {
+      this.messageService.add({ severity: 'error', summary: 'Authentication required', detail: 'Please log in to add items to your basket.' });
+      return;
+    }
     const basket: AddBasketDto = {
       giftId: this.gift.id,
       quantity: this.quantity(),
@@ -54,16 +61,25 @@ export class SingleGiftComponent {
   }
 
   deleteGift() {
-      if(confirm('Are you sure you want to delete this gift?')) {
-      this.giftService.deleteGift(this.gift.id).subscribe({
-        next: () => {
-          console.log('Gift deleted successfully');
-          this.giftDeleted.emit(this.gift.id);
-        },
-        error: (err) => {
-          console.error('Error deleting gift', err);
-        }
-      });
-    }
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this gift?',
+      header: 'Delete Gift',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Delete',
+      rejectLabel: 'Cancel',
+      rejectButtonStyleClass: 'p-button-danger',
+      accept: () => {
+        this.giftService.deleteGift(this.gift.id).subscribe({
+          next: () => {
+            this.messageService.add({ severity: 'success', summary: 'Deleted', detail: 'Gift deleted successfully' });
+            this.giftDeleted.emit(this.gift.id);
+          },
+          error: (err) => {
+            console.error('Error deleting gift', err);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete gift' });
+          }
+        });
+      }
+    });
   }
 }

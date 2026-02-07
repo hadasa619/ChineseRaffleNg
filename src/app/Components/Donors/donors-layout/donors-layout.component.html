@@ -9,8 +9,22 @@
         <a routerLink="add-donor" pButton label="Add New Donor" icon="pi pi-plus"
             class="bg-primary border-primary hover:bg-primary-reverse no-underline shadow-2 font-bold px-4 py-3"></a>
     </div>
+        <div class="flex align-items-center justify-content-start mb-4 gap-3">
+        <span class="text-700 font-medium hidden md:block">
+            <i class="pi pi-search mr-2"></i> Find Gift:
+        </span>
 
-    <p-table [value]="donors()" [lazy]="true" (onLazyLoad)="loadDonors($event)" [paginator]="true" [rows]="rows()"
+        <div class="relative w-full md:w-15rem">
+            <p-dropdown [options]="donors()" optionLabel="name" optionValue="id" placeholder="Enter Donor Name"
+                styleClass="w-full" [filter]="true" [showClear]="true" (onChange)="onDonorSelect($event)">
+                filterBy="name">
+            </p-dropdown>
+
+        </div>
+    </div>
+
+
+    <p-table [value]="filteredDonors() || donors()" [lazy]="true" (onLazyLoad)="loadDonors($event)" [paginator]="true" [rows]="rows()"
         [totalRecords]="totalCount()" [loading]="loading()" [rowsPerPageOptions]="[5, 10, 20]"
         [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} donors"
         class="shadow-2 border-round overflow-hidden">
