@@ -18,7 +18,7 @@ export class GiftService {
     checkStatus() {
         this.http.get<boolean>(`${this.apiUrl}/is-locked`).subscribe(locked => {
             this.isRaffleLocked.set(locked);
-            console.log("in service"+this.isRaffleLocked());
+            
             
         });
     }

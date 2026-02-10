@@ -93,7 +93,7 @@ export class GiftsLayoutComponent implements OnInit {
     this.giftService.getGiftsSortedByPrice().subscribe({
       next: (gifts) => {
         this.gifts.set(gifts);
-        console.log('Gifts retrieved:', gifts);
+        
       },
       error: (error) => {
         console.error('Error retrieving gifts:', error);

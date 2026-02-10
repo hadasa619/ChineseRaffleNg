@@ -42,6 +42,7 @@ export class HomeLayoutComponent {
 
   confirmRaffle() {
     this.confirmationService.confirm({
+      key: 'adminRaffleKey',
       message: 'Are you sure you want to finalize the raffle and download the results?',
       header: 'Grand Raffle Confirmation',
       icon: 'pi pi-exclamation-triangle',

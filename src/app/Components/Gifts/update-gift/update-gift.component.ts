@@ -69,7 +69,7 @@ export class UpdateGiftComponent implements OnInit {
   loadGiftData() {
     this.giftService.getGiftById(this.giftId).subscribe({
       next: (gift: GetGiftDto) => {
-        console.log('Server response:', gift);
+        
         this.giftForm.patchValue(gift);
         this.currentImageUrl = gift.image;
       },

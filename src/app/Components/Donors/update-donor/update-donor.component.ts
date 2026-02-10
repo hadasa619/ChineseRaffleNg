@@ -60,7 +60,7 @@ export class UpdateDonorComponent {
   loadDonorData() {
     this.donorService.getDonorById(this.donorId).subscribe({
       next: (donor: ShowDonor) => {
-        console.log('Server response:', donor);
+        
         this.donorForm.patchValue(donor);
       },
       error: (err) => console.error('Error loading donor', err)

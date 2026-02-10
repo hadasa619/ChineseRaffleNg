@@ -43,7 +43,7 @@ export class BasketComponent implements OnInit {
   @Input() basketItems: GetBasketDto[] = [];
 
   ngOnInit(): void {
-    console.log('Basket items received:', this.basketItems);
+    
   }
 
   updateQuantity(item: GetBasketDto, change: number): void {

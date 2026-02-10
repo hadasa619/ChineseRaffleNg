@@ -47,7 +47,7 @@ export class DonorsLayoutComponent {
 
     this.donorService.getAllDonors(page, size).subscribe({
       next: (response) => {
-        console.log('התגובה מהשרת:', response);
+        
         this.donors.set(response.items);
         this.totalCount.set(response.totalCount);
         this.loading.set(false);

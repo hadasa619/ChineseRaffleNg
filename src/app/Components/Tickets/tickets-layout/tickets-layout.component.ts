@@ -54,7 +54,7 @@ export class TicketsLayoutComponent {
         this.giftService.getGiftsWithBuyers().subscribe({
       next: (gifts) => {
         this.gifts.set(gifts);
-        console.log('Gifts retrieved:', gifts);
+        
       },
       error: (error) => {
         console.error('Error retrieving gifts:', error);

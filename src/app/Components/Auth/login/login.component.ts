@@ -92,7 +92,18 @@ export class LoginComponent {
         },
         error: (err) => {
           this.isLoading = false;
-          this.errorMessage = err.error?.message || 'Server Error';       
+          const msg = err.error?.message || 'Server Error';
+          this.errorMessage = msg;
+          try {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Login failed',
+              detail: msg,
+              life: 5000
+            });
+          } catch (_) {
+            console.error('Failed to display toast message:', _);
+          }
         }
       });
     }

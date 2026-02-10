@@ -20,10 +20,10 @@ export class NavComponent {
   basketService = inject(BasketService);
   messageService = inject(MessageService);
   visibleSidebar: boolean = false;
-  basketItems: GetBasketDto[]  = [];
+  basketItems: GetBasketDto[] = [];
   private router = inject(Router);
 
-ngOnInit() {
+  ngOnInit() {
     this.basketService.basketItems$.subscribe(items => {
       this.basketItems = items;
     });
@@ -44,16 +44,4 @@ ngOnInit() {
     this.messageService.add({ severity: 'success', summary: 'Logged out', detail: 'You have been logged out.' });
     this.router.navigate(['/']);
   }
-  // loadBasket(): void {
-  //   this.basketService.getMyBasket().subscribe({
-  //     next: (data) => this.basketItems = data,
-  //     error: (err) => console.error('Failed to load basket', err)
-  //   });
-  // }
-
-
-  // toggleSidebar() {
-  //   this.visibleSidebar = !this.visibleSidebar;
-  // }
-
 }

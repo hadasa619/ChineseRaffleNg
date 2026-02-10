@@ -10,18 +10,13 @@
         </div>
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
-            @if (errorMessage) {
-                <p-message severity="error" [text]="errorMessage" styleClass="w-full mb-2"></p-message>
-            }
+            <p-message *ngIf="errorMessage" severity="error" [text]="errorMessage" styleClass="w-full mb-2"></p-message>
             <div class="flex flex-column gap-2">
                 <label for="userName" class="font-bold text-800">Username</label>
                 <input pInputText id="userName" formControlName="userName"
                        [ngClass]="{ 'p-invalid': isInvalid('userName') }" 
                        placeholder="Enter your username" class="w-full" />
-                
-                @if (isInvalid('userName')) {
-                    <small class="p-error">Username is required</small>
-                }
+                <small *ngIf="isInvalid('userName')" class="p-error">Username is required</small>
             </div>
 
             <div class="flex flex-column gap-2">
@@ -33,9 +28,7 @@
                             styleClass="w-full" inputStyleClass="w-full">
                 </p-password>
 
-                @if (isInvalid('password')) {
-                    <small class="p-error">Password is required</small>
-                }
+                <small *ngIf="isInvalid('password')" class="p-error">Password is required</small>
             </div>
 
             <p-button label="Sign In" type="submit" class="w-full mt-2" 
