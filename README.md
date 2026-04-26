@@ -1,27 +1,28 @@
-# ChineseRaffleNg
+# ChineseRaffleNg - המכירה הסינית
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.9.
+ממשק לקוח מתקדם שנבנה ב-**Angular 17** עבור מערכת ניהול מכירה סינית. הפרויקט מציג עבודה עם רכיבים דינמיים, ניהול מצב, וקריאות ל-API מבוסס .NET.
 
-## Development server
+## 🔗 קישורים רלוונטיים
+* **צד שרת (Backend API):** [ממשק ה-API ב-.NET](https://github.com/hadasa619/ChineseRaffleApi)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🛠 טכנולוגיות (Tech Stack)
+* **Framework:** Angular 17
+* **Styling:** CSS3 / SCSS
+* **HTTP Client:** Angular HttpClient (לתקשורת מול שרת ה-ASP.NET Core)
+* **Build Tool:** Angular CLI
 
-## Code scaffolding
+## 🚀 תכונות מרכזיות (Key Features)
+* **ממשק משתמש מודרני:** שימוש ב-Components ו-Directives של Angular ליצירת חוויה מהירה.
+* **ניהול רכישות:** מערכת לבחירת פרסים והוספתם לסל קניות אישי.
+* **תקשורת אסינכרונית:** עבודה מול ה-API ב-.NET לקבלת נתונים בזמן אמת על מכירות ופרסים.
+* **Responsive Design:** התאמה מלאה לכל סוגי המסכים.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 📂 מבנה הפרויקט (Angular Structure)
+* `src/app/components/` - רכיבי ה-UI השונים (פרסים, סל קניות, דף בית).
+* `src/app/services/` - שירותים (Services) לניהול הלוגיקה והקריאות לשרת.
+* `src/app/models/` - הגדרת Interfaces לטיפוסי הנתונים בפרויקט.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## ⚙️ הרצה מקומית
+1. התקן את התלויות:
+   ```bash
+   npm install
